@@ -22,7 +22,7 @@ export class InicioComponent implements OnInit {
     console.trace('InicioComponent constructor');
 
     this.title = 'Servicio REST Pokemon con cliente Angular';
-    this.pokemons = [];//this.pokemons = POKEMONS;
+    this.pokemons = []; //this.pokemons = POKEMONS;
     this.pokemon = new Pokemon('');
     this.pokemonSeleccionado = this.pokemons[0]; 
     this.habilidadesPokemon = [];

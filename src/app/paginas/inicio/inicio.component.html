@@ -1,9 +1,24 @@
 <h1>{{title}}</h1> 
 
-<!-- mensaje -->
-<div *ngIf="mensaje" class="alert alert-primary" role="alert">
-    {{mensaje}}
+<div class="row mb-3">
+
+    <!-- BUSCADOR -->
+    <div class="col"> 
+
+        <!-- mensaje -->
+        <div *ngIf="mensaje" class="alert alert-primary" role="alert">
+            {{mensaje}}
+        </div>
+            
+        <div class="input-group">
+            <input type="search" class="form-control" [(ngModel)]="busqueda" placeholder="Busca un pokemon por su nombre">
+            <div class="input-group-append"><span class="input-group-text"><span class="fas fa-search"></span></span></div>            
+        </div>
+
+    </div>
+
 </div>
+
 
 <!-- LISTADO Y DETALLE DE LAS POKEMONS -->
 <div class="row">
@@ -12,7 +27,7 @@
     <div class="col-4">
         <h3>Pokemons</h3>
         <ul class="list-group">
-            <li *ngFor="let pokemon of pokemons " 
+            <li *ngFor="let pokemon of pokemons | pokemonFiltro : busqueda" 
             (click)="seleccionarPokemon(pokemon)" 
                 class="list-group-item {{pokemon==pokemonSeleccionado ? 'active' :'' }}">
                     <p class="pokemon">{{pokemon.id}} - {{pokemon.nombre}}</p> 
