@@ -1,0 +1,11 @@
+<h1 class="text-danger">Bienvenido al backoffice, la zona privada</h1>
+
+<p>Sólo pueden acceder usuarios logeados</p>
+<p>Para proteger el acceso a esta ruta debemos usar una GUARDA / GUARD y definirla en el routing </p>
+<code>path: 'privado', component: PrivadoComponent, canActivate: [LoginGuard]</code>
+<dl>
+    <dt>canActivate</dt>
+        <dd>Guarda para indicar si se puede ativar esa ruta</dd>
+    <dt>LoginGuard</dt>
+        <dd>Guarda creada por nosotros, que devuelve un true (sí tenemos permisos para entrar) o un false (no tenemos permisos para activarlo)</dd>
+</dl>

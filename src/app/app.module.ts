@@ -7,14 +7,18 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { InicioComponent } from './paginas/inicio/inicio.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PokemonPipe } from './pipes/pokemon.pipe'; //para llamadas por http
+import { PokemonPipe } from './pipes/pokemon.pipe';
+import { BackofficeComponent } from './paginas/backoffice/backoffice.component';
+import { LoginComponent } from './paginas/login/login.component'; //para llamadas por http
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     InicioComponent,
-    PokemonPipe
+    PokemonPipe,
+    BackofficeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
