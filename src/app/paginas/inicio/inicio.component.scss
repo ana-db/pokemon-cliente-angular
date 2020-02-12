@@ -1,0 +1,33 @@
+//Variables SASS:
+$color_green:#009C6B;
+
+h1, h3{
+    color: $color_green;
+}
+
+.pokemon {
+    font-weight: bolder;
+}
+
+.detalle-pokemon-nombre{
+    font-size: large;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: $color_green;
+    color: white;
+    padding-left: 0.5rem;
+    padding-bottom: 0.25rem;
+}
+
+.detalle-pokemon{
+    border-color: $color_green;
+    border-style: solid;
+}
+
+.active{
+    background-color: $color_green;
+}
+
+.col-6 {
+    padding-left: 1.5rem;
+}

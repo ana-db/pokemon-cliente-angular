@@ -39,22 +39,21 @@
 <div class="col-8">
 
     <div class="detalle-pokemon">
+        <h3 class="detalle-pokemon-nombre">{{pokemonSeleccionado.nombre}}</h3>
 
         <div class="row">
 
             <div class="col-6">
-                <h3>{{pokemonSeleccionado.nombre}}</h3>
+                <img src="{{pokemonSeleccionado.imagen}}" class="card-img-top" alt="{{pokemonSeleccionado.nombre}}">
             </div> <!-- fin class="col-6" -->
 
             <div class="col-6">
                 <p>Habilidades:</p> 
-                
-                    <ul class="list-group">
-                        <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
-                            {{habilidad | json}}
-                        </li>
-                    </ul>
-            
+                <ul class="list-group">
+                    <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
+                        {{habilidad | json}}
+                    </li>
+                </ul>
             </div> <!-- fin class="col-6" -->
 
         </div> <!-- fin class row dentro de class col-8 -->
