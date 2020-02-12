@@ -1,1 +1,17 @@
-<p>inicio works!</p>
+<h1>{{title}}</h1> 
+
+<!-- mensaje -->
+<div *ngIf="mensaje" class="alert alert-primary" role="alert">
+    {{mensaje}}
+</div>
+
+<!-- listado -->
+<div class="col-4">
+    <h3>Pokemons</h3>
+    <ul class="list-group">
+        <li *ngFor="let pokemon of pokemons " 
+            class="list-group-item ">
+                <p>{{pokemon.id}} - {{pokemon.nombre}}</p> 
+        </li>
+    </ul>
+</div> <!-- class="col-4" -->

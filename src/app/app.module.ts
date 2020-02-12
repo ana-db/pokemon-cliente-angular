@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { InicioComponent } from './paginas/inicio/inicio.component';
+import { HttpClientModule } from '@angular/common/http'; //para llamadas por http
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { InicioComponent } from './paginas/inicio/inicio.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule, //módulo para llamadas por http
     AppRoutingModule
   ],
   providers: [],
