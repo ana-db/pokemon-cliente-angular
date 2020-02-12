@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -24,6 +24,7 @@ import { LoginComponent } from './paginas/login/login.component'; //para llamada
     BrowserModule,
     HttpClientModule, //módulo para llamadas por http
     FormsModule, //módulo para usar formularios
+    ReactiveFormsModule, //módulo para usar formularios reactivos
     AppRoutingModule
   ],
   providers: [],

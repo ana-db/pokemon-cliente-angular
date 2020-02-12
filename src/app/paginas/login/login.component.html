@@ -1,1 +1,34 @@
-<p>login works!</p>
+<h1 class="my-3 text-center">Login Veterinario</h1>
+
+<div class="row justify-content-center align-items-center"> <!-- para centrar el fomulario necesitamos que esté dentro de las clases row y col -->
+            
+    <div class="col">
+        <h3 class="my-3 text-center">Formulario Reactivo</h3>
+
+        <pre>{{ formulario.value | json }}</pre>
+        <pre>{{ formulario.status | json }}</pre>
+
+        <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+
+            <label for="name">Nombre</label>
+            <input type="text" formControlName="nombre" class="form-control" autofocus required placeholder="Escribe tu nombre"> <!-- <input type="text" formControlName="nombre" /> -->
+            <small *ngIf="formulario.controls.nombre.invalid && formulario.controls.nombre.dirty"
+                class="text-danger">Mínimo 2 carácteres y máximo 100</small>
+                <!-- formulario.controls.nombre.invalid para sacar el mensaje sólo cuando el texto no sea correcto
+                    formulario.controls.nombre.dirty para que el mensaje no salga por pantalla al entrar en la página -->
+            <small *ngIf="formulario.controls.nombre.valid" class="text-success">Nombre correcto</small>
+
+            <br>
+            <label for="pass">Password</label>
+            <input type="text" formControlName="pass" class="form-control" required placeholder="Escribe tu contraseña"> <!--  <input type="text" formControlName="pass" /> --> 
+            <small *ngIf="formulario.controls.pass.invalid && formulario.controls.pass.dirty"
+                class="text-danger">Mínimo 6 carácteres y máximo 8</small>
+            <small *ngIf="formulario.controls.pass.valid" class="text-success">Password correcto</small>
+
+            <br>
+            <input type="submit" class="btn btn-secondary btn-block" [disabled]="formulario.invalid" value="Enviar" />
+        
+        </form> <!-- fin form -->
+    </div> <!-- fin col -->
+            
+</div> <!-- fin class="row justify-content-center align-items-center" -->
