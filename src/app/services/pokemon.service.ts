@@ -27,13 +27,17 @@ export class PokemonService implements IPokemonService {
   }
 
 
+  getHabilidad(nombreHabilidad: number): Observable<any> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${nombreHabilidad}/`;
+    console.trace('PokemonService getHabilidad ' + url);
+    return this.http.get(url); 
+  }
+
+
   getById(idPokemon: number) {
     throw new Error("Method not implemented.");
   }
   getByName(idPokemon: string) {
-    throw new Error("Method not implemented.");
-  }
-  getHabilidad(nombreHabilidad: number): Observable<any> {
     throw new Error("Method not implemented.");
   }
 

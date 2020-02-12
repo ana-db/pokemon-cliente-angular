@@ -5,13 +5,47 @@
     {{mensaje}}
 </div>
 
-<!-- listado -->
-<div class="col-4">
-    <h3>Pokemons</h3>
-    <ul class="list-group">
-        <li *ngFor="let pokemon of pokemons " 
-            class="list-group-item ">
-                <p>{{pokemon.id}} - {{pokemon.nombre}}</p> 
-        </li>
-    </ul>
-</div> <!-- class="col-4" -->
+<!-- LISTADO Y DETALLE DE LAS POKEMONS -->
+<div class="row">
+
+    <!-- listado -->
+    <div class="col-4">
+        <h3>Pokemons</h3>
+        <ul class="list-group">
+            <li *ngFor="let pokemon of pokemons " 
+            (click)="seleccionarPokemon(pokemon)" 
+                class="list-group-item {{pokemon==pokemonSeleccionado ? 'active' :'' }}">
+                    <p class="pokemon">{{pokemon.id}} - {{pokemon.nombre}}</p> 
+            </li>
+        </ul>
+    </div> <!-- class="col-4" -->
+
+<!-- detalle -->
+<div class="col-8">
+
+    <div class="detalle-pokemon">
+
+        <div class="row">
+
+            <div class="col-6">
+                <h3>{{pokemonSeleccionado.nombre}}</h3>
+            </div> <!-- fin class="col-6" -->
+
+            <div class="col-6">
+                <p>Habilidades:</p> 
+                
+                    <ul class="list-group">
+                        <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
+                            {{habilidad | json}}
+                        </li>
+                    </ul>
+            
+            </div> <!-- fin class="col-6" -->
+
+        </div> <!-- fin class row dentro de class col-8 -->
+
+    </div> <!-- fin class detalle-pokemon -->
+
+</div> <!-- fin class col-8 -->
+
+</div> <!-- fin class row -->    

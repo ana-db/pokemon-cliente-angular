@@ -13,6 +13,8 @@ export class InicioComponent implements OnInit {
   title: string;
   pokemons : Array<any>;
   pokemon: Pokemon;
+  pokemonSeleccionado: Array<any>;
+  habilidadesPokemon: Array<any>;
   mensaje: String;
 
   constructor( private pokemonService: PokemonService ) { //inyectamos el servicio pokemon
@@ -22,12 +24,15 @@ export class InicioComponent implements OnInit {
     this.title = 'Servicio REST Pokemon con cliente Angular';
     this.pokemons = [];//this.pokemons = POKEMONS;
     this.pokemon = new Pokemon('');
+    this.pokemonSeleccionado = this.pokemons[0]; 
+    this.habilidadesPokemon = [];
     this.mensaje = '';
 
   } //fin constructor
 
   
   ngOnInit() {
+
     console.trace('InicioComponent ngOnInit');
 
     //llamadas a los servicios
@@ -43,6 +48,7 @@ export class InicioComponent implements OnInit {
                                   no tenemos que hacer más llamadas para recoger otros datos porque data 
                                   los tiene todos, con asignarlos al array de pokemos ya está
                                 */
+          this.habilidadesPokemon = this.pokemons.map( el => el.habilidades );                   
           this.mensaje = 'Lista de Pokemon cargada correctamente desde http://localhost:8080/pokemon-rest/api/pokemon/';   
       },
       error => {
@@ -52,8 +58,16 @@ export class InicioComponent implements OnInit {
       () => {
           console.trace('Esto se hace siempre, tanto si funciona como si hay un error');
       }
-    );
+    ); //fin llamada a getAll() con pokemonService
 
   } //fin ngOnInit
 
-}
+
+  //función para seleccionar una fruta y sacar su detalle: 
+  seleccionarPokemon = function(pokemon){
+    console.log('Hemos hecho click en el pokemon %o', pokemon ); 
+    this.pokemonSeleccionado = pokemon;
+  }
+
+
+} //InicioComponent
