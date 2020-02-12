@@ -15,6 +15,6 @@ export interface IUsuarioService{
      */
     login( nombre: string, password: string) : Usuario;
 
-    cerrarSesion( idUsuario: number);
+    cerrarSesion( );
 
 }

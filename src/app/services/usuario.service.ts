@@ -38,6 +38,7 @@ export class UsuarioService implements IUsuarioService{
     const PASS = 'admin123';
     let usuarioBuscar: Usuario; //si no entra en el if es undefined
 
+    //si las credenciales del usuario coinciden con NOMBRE y PASS, está logeado y puede entrar al backoffice
     if( NOMBRE === nombre && PASS === password ){
       console.trace('usuario encontrado');
       usuarioBuscar = new Usuario();

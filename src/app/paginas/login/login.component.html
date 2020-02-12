@@ -1,9 +1,12 @@
-<h1 class="my-3 text-center">Login Veterinario</h1>
+<h1 class="my-3 text-center">Login Pokemon</h1>
 
 <div class="row justify-content-center align-items-center"> <!-- para centrar el fomulario necesitamos que esté dentro de las clases row y col -->
             
-    <div class="col">
-        <h3 class="my-3 text-center">Formulario Reactivo</h3>
+    <div class="col-6">
+        <p>Cuando trabajamos con formularios, es MUY IMPORTANTE acordarnos de añadir las siguientes 
+            líneas en <code>app.module.ts</code>: <code>ReactiveFormsModule</code> para formularios reactivos, 
+            <code>FormsModule</code> para formularios comunes y <code>import  FormsModule, ReactiveFormsModule  from '@angular/forms';</code>
+        </p>
 
         <pre>{{ formulario.value | json }}</pre>
         <pre>{{ formulario.status | json }}</pre>
@@ -26,7 +29,7 @@
             <small *ngIf="formulario.controls.pass.valid" class="text-success">Password correcto</small>
 
             <br>
-            <input type="submit" class="btn btn-secondary btn-block" [disabled]="formulario.invalid" value="Enviar" />
+            <input type="submit" class="btn btn-primary btn-block" [disabled]="formulario.invalid" value="Enviar" />
         
         </form> <!-- fin form -->
     </div> <!-- fin col -->

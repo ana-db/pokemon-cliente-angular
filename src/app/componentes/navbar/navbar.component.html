@@ -11,6 +11,26 @@
           <a [routerLink]="[r.ruta]" routerLinkActive="active" class="nav-link">{{r.nombre}}</a>
         </li>
 
+        <!-- rutas visibles para el usuario si está logeado o no: -->
+        <li class="nav-item" >
+          <a *ngIf = "!isLogeado" [routerLink]="'/login'" routerLinkActive="" class="nav-link"> Iniciar Sesión </a>
+        </li>
+
+        <li class="nav-item" >
+          <a *ngIf = "usuarioService.estaLogeado()" [routerLink]="'/backoffice'" routerLinkActive="" class="nav-link"> Backoffice </a>
+        </li>
+
+        <li class="nav-item" >
+          <a *ngIf = "usuarioService.estaLogeado()" (click)="salir()" class="nav-link text-danger"> Cerrar sesión </a>
+        </li>
+        <!-- mejoramos el código:
+          he ssustituido las 3 llamadas a la función usuarioService.estaLogeado() 
+          por la variable booleana isLogeado 
+          en navbar.component.ts hacemos this.isLogeado = usuarioService.estaLogeado(); 
+          y así mejoramos un poco el código evitando que por consola aparezca el mensaje de está logeado 
+          varias veces (tantas como veces llamamos a la función desde el navbar)
+        -->
+
       </ul>  
     </div>
 </nav>

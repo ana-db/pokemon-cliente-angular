@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
             // y Router para las rutas
 
     console.trace('LoginComponent constructor');
-
+ 
     //construimos formulario:
     this.formulario = this.builder.group({
       //definimos los FormControl == inputs [value, validaciones]
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
     if( uLogeado ){
       console.trace('Usario logeado con exito %o', uLogeado);
-      this.router.navigate(['privado']);
+      this.router.navigate(['backoffice']);
     }else{
       console.trace('Usario NO logeado');
       //TODO cambiar alert por mensaje al usuario
