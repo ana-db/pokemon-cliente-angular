@@ -9,15 +9,37 @@
         <div *ngIf="mensaje" class="alert alert-primary" role="alert">
             {{mensaje}}
         </div>
-            
-        <div class="input-group">
-            <input type="search" class="form-control" [(ngModel)]="busqueda" placeholder="Busca un pokemon por su nombre">
-            <div class="input-group-append"><span class="input-group-text"><span class="fas fa-search"></span></span></div>            
-        </div>
+        
+        <div class="row">
+            <div class="col"> 
+                <!-- buscador por nombre -->
+                <div class="input-group">
+                    <input type="search" class="form-control" [(ngModel)]="busqueda" placeholder="Busca un pokemon por su nombre">
+                    <div class="input-group-append"><span class="input-group-text"><span class="fas fa-search"></span></span></div>            
+                </div>
+            </div>
 
+            <div class="col"> 
+                <div class="form-group">
+                     <!-- Búsqueda por habilidad, checkbox -->
+                    <select name="id" class="form-control" id="category-select">
+                        <option value="0">Todas las habilidades</option>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <div class="input-group-append"><span class="input-group-text"><span class="fas fa-search"></span></span></div>            
+                            <ul class="list-group">
+                                <li *ngFor="let habilidad of habilidadesPokemon" class="list-group-item">
+                                    {{habilidad}}
+                                </li>
+                            </ul>
+                        </div>  
+                    </select>
+                </div> <!-- fin form-group -->
+            </div> <!-- fin col -->
+        </div>  <!-- fin row 2 --> 
     </div>
 
-</div>
+</div> <!-- fin row 1 -->
 
 
 <!-- LISTADO Y DETALLE DE LAS POKEMONS -->
@@ -25,7 +47,7 @@
 
     <!-- listado -->
     <div class="col-4">
-        <h3>Pokemons</h3>
+        <h3>Pokemon</h3>
         <ul class="list-group">
             <li *ngFor="let pokemon of pokemons | pokemonFiltro : busqueda" 
             (click)="seleccionarPokemon(pokemon)" 
@@ -35,31 +57,31 @@
         </ul>
     </div> <!-- class="col-4" -->
 
-<!-- detalle -->
-<div class="col-8">
+    <!-- detalle -->
+    <div class="col-8">
 
-    <div class="detalle-pokemon">
-        <h3 class="detalle-pokemon-nombre">{{pokemonSeleccionado.nombre}}</h3>
+        <div class="detalle-pokemon">
+            <h3 class="detalle-pokemon-nombre">{{pokemonSeleccionado.nombre}}</h3>
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-6">
-                <img src="{{pokemonSeleccionado.imagen}}" class="card-img-top" alt="{{pokemonSeleccionado.nombre}}">
-            </div> <!-- fin class="col-6" -->
+                <div class="col-6">
+                    <img src="{{pokemonSeleccionado.imagen}}" class="card-img-top" alt="{{pokemonSeleccionado.nombre}}">
+                </div> <!-- fin class="col-6" -->
 
-            <div class="col-6">
-                <p>Habilidades:</p> 
-                <ul class="list-group">
-                    <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
-                        {{habilidad | json}}
-                    </li>
-                </ul>
-            </div> <!-- fin class="col-6" -->
+                <div class="col-6">
+                    <p>Habilidades:</p> 
+                    <ul class="list-group">
+                        <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
+                            {{habilidad | json}}
+                        </li>
+                    </ul>
+                </div> <!-- fin class="col-6" -->
 
-        </div> <!-- fin class row dentro de class col-8 -->
+            </div> <!-- fin class row dentro de class col-8 -->
 
-    </div> <!-- fin class detalle-pokemon -->
+        </div> <!-- fin class detalle-pokemon -->
 
-</div> <!-- fin class col-8 -->
+    </div> <!-- fin class col-8 -->
 
 </div> <!-- fin class row -->    
