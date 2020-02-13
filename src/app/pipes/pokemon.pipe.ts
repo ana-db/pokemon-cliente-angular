@@ -14,7 +14,8 @@ export class PokemonPipe implements PipeTransform {
 
     let resultado = pokemons;
 
-    //1) filtrar por NOMBRE del pokemon:
+/*
+   //1) filtrar sólo por NOMBRE del pokemon (funciona bien):
     if( busqueda && '' !== busqueda ){ 
 
       busqueda = busqueda.toLowerCase();
@@ -24,16 +25,22 @@ export class PokemonPipe implements PipeTransform {
         console.debug('encontrar', encontrar);
         return encontrar.includes(busqueda);  //includes indica si la cadena que tenemos guardada en "busqueda" está en "encontrar", si es asi, lo guarda en resultado para mostrarlo por pantalla
       });
-/*
-      //si quisiéramos buscar por nombre y habilidad (no funciona, con error):
+*/
+
+    //2) filtramos por NOMBRE del pokemon y por nombre de HABILIDAD:
+    if( busqueda && '' !== busqueda ){ 
+
+      busqueda = busqueda.toLowerCase();
+
       resultado = resultado.filter( (el) => {
-        const habilidades = reduce( (el, index, array ) => { return el === nombre; } ); 
-        const habilidadesNombre = el.habilidades.reduce( (c,p) => c + p, '' ); //cogemos el array con todas las hanilidades y las reducimos a 1 string
-        const encontrar = (el.nombre + habilidadesNombre).toLowerCase(); //concatenamos el nombre del pokemon y el string con las habilidades y lo pasamos a minúsculas
+        const habilidadesNombre = el.habilidades.reduce( (p,c) => {
+          return p.concat(c.nombre);
+        }, " "); 
+        const encontrar = (el.nombre + habilidadesNombre).toLowerCase(); //queremos buscar el pokemon por su nombre y por su habilidad así que los concatenamos y lo pasamos a minúsculas
         console.debug('encontrar', encontrar);
         return encontrar.includes(busqueda);  //includes indica si la cadena que tenemos guardada en "busqueda" está en "encontrar", si es asi, lo guarda en resultado para mostrarlo por pantalla
       });
-*/
+      
     }
 
     return resultado;
