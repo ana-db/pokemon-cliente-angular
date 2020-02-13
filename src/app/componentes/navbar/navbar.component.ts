@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   rutas: Array<any>;
-  isLogeado: boolean;
+  //isLogeado: boolean;
 
   constructor( private router: Router,
               private usuarioService: UsuarioService ) { //inyectamos UsuarioService para poder habilitar/deshabilitar el link de la zona privada
     console.trace('NavbarComponent constructor');
     this.rutas = RUTAS;
-    this.isLogeado = usuarioService.estaLogeado(); //así mejoramos un poco el código evitando que por consola nos aparezca el mensaje de está logeado varias veces (tantas como veces llamamos a la función desde el navbar)
+    //this.isLogeado = usuarioService.estaLogeado(); //así mejoramos un poco el código evitando que por consola nos aparezca el mensaje de está logeado varias veces (tantas como veces llamamos a la función desde el navbar)
   } //fin constructor
 
 
