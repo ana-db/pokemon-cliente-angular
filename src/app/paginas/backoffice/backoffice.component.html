@@ -9,3 +9,49 @@
     <dt>LoginGuard</dt>
         <dd>Guarda creada por nosotros, que devuelve un true (sí tenemos permisos para entrar) o un false (no tenemos permisos para activarlo)</dd>
 </dl>
+
+<div class="crear">
+    <input type="text" [(ngModel)]="nombreNuevo" class="form-control" placeholder="Escribe aquí el nombre de tu pokemon">
+    <button (click)="crearPokemon()" class="btn btn-primary">Crear nuevo pokemon</button>
+</div>
+
+<div>
+    <ul>
+        <li *ngFor = "let pokemon of pokemons" (click)="modoEdicion = true">
+            {{pokemon.id}}
+            <input type="text" [(ngModel)]=pokemon.nombre>
+            <!-- eliminar tarea -->
+            <span class="fas fa-trash-alt" (click)="liberarPokemon(pokemon)"></span>
+        </li>
+    </ul>
+</div>
+
+
+
+
+
+<!-- VENTANA MODAL BOOTSTRAP PARA LIBERAR POKEMON -->
+<!-- Button trigger modal 
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">Liberar pokemon</button>
+-->
+<!-- Modal 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Liberar pokemon</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ¿Estás seguro de que quieres liberar este pokemon?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <a class="btn btn-danger" (click)=liberarPokemon(pokemon)>Liberar</a>
+            </div>
+        </div>
+    </div>
+</div>
+-->

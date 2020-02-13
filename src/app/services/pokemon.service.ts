@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs'; //relacionado con la programación reactiva
 import { IPokemonService } from './IPokemon.service';
+import { Pokemon } from '../model/pokemon';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,19 @@ export class PokemonService implements IPokemonService {
   getByName(idPokemon: string) {
     throw new Error("Method not implemented.");
   }
+
+
+  freePokemon(id: number): Observable<Pokemon> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${id}`;
+    console.debug('DELETE %s liberar', url);
+    return this.http.delete<Pokemon>(url);
+  } //fin liberar
+
+
+  createPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/`;
+    console.debug('POST %s crear pokemon %o ', url, pokemon); //%s string, %o objeto
+    return this.http.post<Pokemon>(url, pokemon);
+  } //fin liberar
 
 } //fin PokemonService
