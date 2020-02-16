@@ -43,17 +43,17 @@ export class PokemonService implements IPokemonService {
   }
 
 
-  freePokemon(id: number): Observable<Pokemon> {
+  eliminar(id: number): Observable<Pokemon> {
     const url = `http://localhost:8080/pokemon-rest/api/pokemon/${id}`;
-    console.debug('DELETE %s liberar', url);
+    console.debug('DELETE %s eliminar', url);
     return this.http.delete<Pokemon>(url);
-  } //fin liberar
+  } //fin eliminar
 
 
-  createPokemon(pokemon: Pokemon): Observable<Pokemon> {
+  crear(pokemon: Pokemon): Observable<Pokemon> {
     const url = `http://localhost:8080/pokemon-rest/api/pokemon/`;
     console.debug('POST %s crear pokemon %o ', url, pokemon); //%s string, %o objeto
     return this.http.post<Pokemon>(url, pokemon);
-  } //fin liberar
+  } //fin crear
 
 } //fin PokemonService

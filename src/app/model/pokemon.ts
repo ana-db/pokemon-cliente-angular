@@ -1,5 +1,25 @@
 export class Pokemon {
 
+    id: number;
+    nombre: string;
+    habilidades: Array<any>;
+    imagen: string;
+    
+
+    constructor(nombre: string) {
+        this.id = 0;
+        this.nombre = '';
+        this.habilidades = [];
+        this.imagen = 'https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png';
+    }
+
+
+
+
+}
+/*
+export class Pokemon {
+
     private _id: number;
     private _imagen: string;
     private _nombre: string;
@@ -49,3 +69,5 @@ export class Pokemon {
    
 
 }
+
+*/
