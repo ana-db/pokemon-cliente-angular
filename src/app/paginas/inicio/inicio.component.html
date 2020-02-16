@@ -73,7 +73,7 @@
                     <p>Habilidades:</p> 
                     <ul class="list-group">
                         <li *ngFor="let habilidad of pokemonSeleccionado.habilidades" class="list-group-item">
-                            {{habilidad | json}}
+                            {{habilidad.nombre}}
                         </li>
                     </ul>
                 </div> <!-- fin class="col-6" -->
