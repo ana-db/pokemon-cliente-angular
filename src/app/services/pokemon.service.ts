@@ -56,4 +56,11 @@ export class PokemonService implements IPokemonService {
     return this.http.post<Pokemon>(url, pokemon);
   } //fin crear
 
+
+  modificar(pokemon: Pokemon): Observable<Pokemon> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}`;
+    console.debug('PUT %s modificar pokemon %o ', url, pokemon); //%s string, %o objeto
+    return this.http.put<Pokemon>(url, pokemon);
+  } //fin modificar
+
 } //fin PokemonService

@@ -115,4 +115,15 @@ export class BackofficeComponent implements OnInit {
   }//fin crearPokemon
 
 
+  cambiarNombre(pokemon : Pokemon): void{
+    console.debug('loose focus para editar nombre del pokemon %o', pokemon);
+    this.pokemonService.modificar(pokemon).subscribe( () => this.cargarPokemons() ); 
+  }// fin cambiarNombre
+
+  cambiarImagen(pokemon : Pokemon): void{
+    console.debug('loose focus para editar imagen del pokemon %o', pokemon);
+    this.pokemonService.modificar(pokemon).subscribe( () => this.cargarPokemons() ); 
+  }// fin cambiarImagen
+
+
 }//fin BackofficeComponent

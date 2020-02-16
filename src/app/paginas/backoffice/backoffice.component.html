@@ -21,8 +21,12 @@
     <ul>
         <li *ngFor = "let pokemon of pokemons" (click)="modoEdicion = true">
             {{pokemon.id}}
-            <input type="text" [(ngModel)]=pokemon.nombre>
-            <!-- eliminar tarea -->
+            <!-- editar pokemon -->
+            <input type="text" [(ngModel)]=pokemon.nombre
+                    (blur)="cambiarNombre(pokemon)">
+            <input type="text" [(ngModel)]=pokemon.imagen
+                    (blur)="cambiarImagen(pokemon)">
+            <!-- eliminar pokemon -->
             <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
         </li>
     </ul>
