@@ -1,8 +1,10 @@
+backoffice.component.ts 16/02/2020
+
+/////////////////////////////////
+
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-backoffice',
@@ -18,9 +20,7 @@ export class BackofficeComponent implements OnInit {
   mensaje: string;
   showMensaje: boolean;
 
-  formulario: FormGroup;
-
-  constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
+  constructor( private pokemonService: PokemonService ) { 
 
     console.trace('BackofficeComponent constructor');
 
@@ -31,14 +31,6 @@ export class BackofficeComponent implements OnInit {
 
     this.mensaje = '';
     this.showMensaje = false;
-
-    //construimos formulario:
-    this.formulario = this.builder.group({
-      //definimos los FormControl == inputs [value, validaciones]
-      nombreNuevo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
-      id: ['0'],
-    }); //llaves y par√©ntesis porque tenemos un objeto
 
   }
 
@@ -62,14 +54,14 @@ export class BackofficeComponent implements OnInit {
     //llamamos al service para obtener pokemon:
     this.pokemonService.getAll().subscribe( 
       data => {
-          console.debug('Petici√≥n correcta data o%', data); 
+          console.debug('PeticiÛn correcta data o%', data); 
           this.pokemons = data; 
           this.pokemonSeleccionado = this.pokemons[0];
           console.trace('pokemons ngOnInit %o', this.pokemons);           
       },
       error => {
-          console.warn('Petici√≥n err√≥nea data o%', error);
-          this.mensaje = 'Error de conexi√≥n: el servicio rest no funciona. Posiblemente no est√© arrancado';
+          console.warn('PeticiÛn errÛnea data o%', error);
+          this.mensaje = 'Error de conexiÛn: el servicio rest no funciona. Posiblemente no estÈ arrancado';
           this.showMensaje = true;
       }
     ); //fin llamada a getAll() con pokemonService
@@ -81,8 +73,8 @@ export class BackofficeComponent implements OnInit {
 
     console.debug('Click liberar pokemon %o', pokemon);
 
-    if( confirm('¬øEst√°s seguro de que quieres liberar este pokemon?') ){
-      console.trace('Eliminaci√≥n confirmada');
+    if( confirm('øEst·s seguro de que quieres liberar este pokemon?') ){
+      console.trace('EliminaciÛn confirmada');
       
       this.pokemonService.eliminar(pokemon.id).subscribe( () =>{
         this.mensaje = 'Has eliminado el pokemon';
@@ -90,7 +82,7 @@ export class BackofficeComponent implements OnInit {
         this.cargarPokemons();
       } ); 
     }else{
-      console.trace('Eliminaci√≥n cancelada');
+      console.trace('EliminaciÛn cancelada');
     } 
 
   } //fin liberarPokemon
@@ -121,7 +113,7 @@ export class BackofficeComponent implements OnInit {
         this.tituloTareaMensaje = `y titulo ${datos.titulo}`; */
       });
     }else{
-      this.mensaje = 'El nombre del pokemon no es v√°lido, debe contener al menos 2 caracteres';
+      this.mensaje = 'El nombre del pokemon no es v·lido, debe contener al menos 2 caracteres';
     } 
 
   }//fin crearPokemon
@@ -136,59 +128,6 @@ export class BackofficeComponent implements OnInit {
     console.debug('loose focus para editar imagen del pokemon %o', pokemon);
     this.pokemonService.modificar(pokemon).subscribe( () => this.cargarPokemons() ); 
   }// fin cambiarImagen
-
-
-  //////////////////////////////////// formulario reactivo ////////////////////////////////////////////
-  enviar( values: any ){
-    console.trace('Enviar formulario %o', values);
-
-    const nombreNuevo = values.nombreNuevo;
-    const imagenNueva = values.imagenNueva;
-    
-    //creamos un objeto pokemon nuevo:
-    const pokemonNuevo = new Pokemon(nombreNuevo);
-    
-    if ( nombreNuevo.trim().length > 1){
-      pokemonNuevo.nombre = nombreNuevo;
-      pokemonNuevo.imagen = imagenNueva;
-      console.debug('Pokemon nuevo %o', pokemonNuevo);
-
-      this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
-        console.debug('Nuevo pokemon creado en json-server %o', datos);
-        this.nombreNuevo = ''; //limpiamos input text
-        this.imagenNueva = '';
-        this.cargarPokemons();
-
-        this.mensaje = 'Has creado un nuevo pokemon '; 
-        this.showMensaje = true;  
-        /* this.idTareaMensaje = `id ${datos.id} `;
-        this.tituloTareaMensaje = `y titulo ${datos.titulo}`; */
-      });
-    }else{
-      this.mensaje = 'El nombre del pokemon no es v√°lido, debe contener al menos 2 caracteres';
-    } 
-
-  } //enviar
-
-
-  /**
-   * Funci√≥n que carga los datos de un pokemon din√°micamente en el formulario para editarlos
-   * @param pokemon 
-   */
-  cargarPokemonFormulario(pokemon: Pokemon){
-    
-    console.debug('Se cargan en el formulario los datos de %o', pokemon);
-    
-    const controlId = this.formulario.get('id');
-    controlId.setValue( pokemon.id );
-
-    const controlNombre = this.formulario.get('nombreNuevo');
-    controlNombre.setValue( pokemon.nombre );
-
-    const controlImagen = this.formulario.get('imagenNueva');
-    controlImagen.setValue( pokemon.imagen );
-    
-  }
 
 
 }//fin BackofficeComponent

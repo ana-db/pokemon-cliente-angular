@@ -27,7 +27,8 @@
             <ul>
                 <li *ngFor = "let pokemon of pokemons">
                     {{pokemon.id}} - {{pokemon.nombre}}
-                    
+                    <!-- editar pokemon -->
+                    <button (click)="cargarPokemonFormulario(pokemon)" class="btn btn-primary">Modificar</button>
                     <!-- eliminar pokemon -->
                     <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
                 </li>
@@ -49,8 +50,13 @@
 
     <!-- FORMULARIO -->
     <div class="col">
+        {{ formulario.value | json }}
+        {{ formulario.status | json }}
         <div class="crear">
             <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+                <label for="id">ID</label>
+                <input type="text" formControlName="id" class="form-control" readonly required placeholder="ID de tu pokemon">
+
                 <label for="name">Nombre</label>
                 <input type="text" formControlName="nombreNuevo" class="form-control" autofocus required placeholder="Escribe aquí el nombre de tu pokemon">
                 <small *ngIf="formulario.controls.nombreNuevo.invalid && formulario.controls.nombreNuevo.dirty"

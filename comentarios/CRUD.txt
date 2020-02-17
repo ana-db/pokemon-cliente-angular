@@ -1,0 +1,60 @@
+pokemon-cliente-angular
+
+
+
+1) GET endpoint/pokemon/		response 200
+2) GET endpoint/pokemon/{id}		response 200, 404
+3) DELETE endpoint/pokemon/{id}		response 200, 404, 409
+4) POST endpoint/pokemon/		response 201
+
+	request body (para saber qué datos tenemos que enviar, vemos los atributos del pojo de java)
+	{
+		"nombre": "nuevo_nombre",
+		"habilidades": [] //TODO para siguiente entrega
+	}
+
+left join entre tablas pokemon y pokemon_has_habilidades para que al crear un pokemon, 
+luego podamos hacer un getAll y veamos ese pokemon creado
+
+	response body 
+	{
+		"id": "x",
+		"nombre": "nuevo_nombre",
+		"habilidades": [] //TODO para siguiente entrega
+	}
+
+					response: 409: nombre duplicado, min 1 máx 50 
+					(comprobar el tamaño del nombre desde el pojo java con las validaciones y desde la interfaz gráfica de angular)
+
+5) PUT endpoint/pokemon/{id}			response 200
+
+	request body 
+	{
+		"id": 3,
+		"nombre": "nuevo_nombre",
+	}
+
+	response body 
+	{
+		"id": "3",
+		"nombre": "nuevo_nombre",
+	}
+
+					response: 409: nombre duplicado, min 1 máx 50 
+					(comprobar el tamaño del nombre desde el pojo java con las validaciones y desde la interfaz gráfica de angular)
+
+
+
+
+
+/*
+	private static final String SQL_GET_ALL = "SELECT p.id 'id_pokemon', p.nombre 'nombre_pokemon', p.imagen 'imagen_pokemon', h.id 'id_habilidad', h.nombre 'nombre_habilidad' " + 
+												" FROM pokemon p, pokemon_has_habilidades ph, habilidad h " + 
+												" WHERE p.id = ph.id_pokemon AND ph.id_habilidad = h.id " + 
+												" ORDER BY p.id DESC LIMIT 500;";
+	*/
+//necesitamos hacer LEFT JOIN entre tablas pokemon y pokemon_has_habilidades para que al crear un pokemon sin habilidades, podamos verlo al hacer un getAll
+	private static final String SQL_GET_ALL = "SELECT p.id 'id_pokemon', p.nombre 'nombre_pokemon', p.imagen 'imagen_pokemon', h.id 'id_habilidad', h.nombre 'nombre_habilidad' " +
+												" FROM pokemon p LEFT JOIN pokemon_has_habilidades ph ON p.id = ph.id_pokemon " + 
+												" LEFT JOIN habilidad h ON ph.id_habilidad = h.id " + 
+												" ORDER BY p.id DESC LIMIT 500;";
