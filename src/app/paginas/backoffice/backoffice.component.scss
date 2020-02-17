@@ -1,0 +1,14 @@
+//Variables SASS:
+$color:#009C6B;
+
+.active{
+    background-color: $color;
+}
+
+input.btn.btn-success.btn-block{
+    background-color: $color;
+}
+
+li{
+    list-style: none; //quitamos el puntito negro de la numeración
+}

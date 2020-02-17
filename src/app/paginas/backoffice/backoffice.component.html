@@ -69,7 +69,7 @@
                 <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon">
                 
                 <!-- <button (click)="crearPokemon()" class="btn btn-success">Crear nuevo pokemon</button> -->
-                <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="Crear" />
+                <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ id == 0 ? 'Crear' : 'Modificar' }}" />
             </form>
         </div>
     </div>
