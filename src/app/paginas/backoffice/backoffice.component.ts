@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-backoffice',
@@ -16,7 +17,9 @@ export class BackofficeComponent implements OnInit {
   mensaje: string;
   showMensaje: boolean;
 
-  constructor( private pokemonService: PokemonService ) { 
+  formulario: FormGroup;
+
+  constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
 
     console.trace('BackofficeComponent constructor');
 
@@ -27,6 +30,13 @@ export class BackofficeComponent implements OnInit {
 
     this.mensaje = '';
     this.showMensaje = false;
+
+    //construimos formulario:
+    this.formulario = this.builder.group({
+      //definimos los FormControl == inputs [value, validaciones]
+      nombreNuevo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      imagenNueva: ['', [Validators.required, Validators.maxLength(150)]]
+    }); //llaves y paréntesis porque tenemos un objeto
 
   }
 
@@ -124,6 +134,39 @@ export class BackofficeComponent implements OnInit {
     console.debug('loose focus para editar imagen del pokemon %o', pokemon);
     this.pokemonService.modificar(pokemon).subscribe( () => this.cargarPokemons() ); 
   }// fin cambiarImagen
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  enviar( values: any ){
+    console.trace('Enviar formulario %o', values);
+
+    const nombreNuevo = values.nombreNuevo;
+    const imagenNueva = values.imagenNueva;
+    
+    //creamos un objeto pokemon nuevo:
+    const pokemonNuevo = new Pokemon(nombreNuevo);
+    
+    if ( nombreNuevo.trim().length > 1){
+      pokemonNuevo.nombre = nombreNuevo;
+      pokemonNuevo.imagen = imagenNueva;
+      console.debug('Pokemon nuevo %o', pokemonNuevo);
+
+      this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
+        console.debug('Nuevo pokemon creado en json-server %o', datos);
+        this.nombreNuevo = ''; //limpiamos input text
+        this.imagenNueva = '';
+        this.cargarPokemons();
+
+        this.mensaje = 'Has creado un nuevo pokemon '; 
+        this.showMensaje = true;  
+        /* this.idTareaMensaje = `id ${datos.id} `;
+        this.tituloTareaMensaje = `y titulo ${datos.titulo}`; */
+      });
+    }else{
+      this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
+    } 
+
+  } //enviar
 
 
 }//fin BackofficeComponent

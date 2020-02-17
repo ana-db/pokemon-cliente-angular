@@ -1,50 +1,91 @@
-<h1 class="text-danger">Bienvenido al backoffice, la zona privada</h1>
+<div class="row">
+    <div class="col">
+        <h1 class="text-danger">Bienvenido al backoffice</h1>
 
-<!-- mensajes al usuario -->
-<div *ngIf="showMensaje" class = "alert alert-primary alert-dismissible fade show" role="alert">
-    {{mensaje}} 
-    <button (click)="showMensaje = !showMensaje" type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+        <!-- mensajes al usuario -->
+        <div *ngIf="showMensaje" class = "alert alert-primary alert-dismissible fade show" role="alert">
+            {{mensaje}} 
+            <button (click)="showMensaje = !showMensaje" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
 </div>
 
-
+<!-- 
 <div class="crear">
     <input type="text" [(ngModel)]="nombreNuevo" class="form-control" placeholder="Escribe aquí el nombre de tu pokemon">
     <input type="text" [(ngModel)]="imagenNueva" class="form-control" placeholder="Escribe aquí la url de la imagen de tu pokemon">
     <button (click)="crearPokemon()" class="btn btn-success">Crear nuevo pokemon</button>
 </div>
-<br>
+-->
 
+<div class="row">
+    <!-- LISTA -->
+    <div class="col">
+        <div>
+            <ul>
+                <li *ngFor = "let pokemon of pokemons">
+                    {{pokemon.id}} - {{pokemon.nombre}}
+                    
+                    <!-- eliminar pokemon -->
+                    <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
+                </li>
+                <!-- 
+                <li *ngFor = "let pokemon of pokemons" (click)="modoEdicion = true">
+                    {{pokemon.id}}
+                     editar pokemon 
+                    <input type="text" [(ngModel)]=pokemon.nombre
+                            (blur)="cambiarNombre(pokemon)">
+                    <input type="text" [(ngModel)]=pokemon.imagen
+                            (blur)="cambiarImagen(pokemon)"> 
+                     eliminar pokemon 
+                    <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
+                </li>
+                -->
+            </ul>
+        </div>
+    </div>
 
-<div>
-    <ul>
-        <li *ngFor = "let pokemon of pokemons" (click)="modoEdicion = true">
-            {{pokemon.id}}
-            <!-- editar pokemon -->
-            <input type="text" [(ngModel)]=pokemon.nombre
-                    (blur)="cambiarNombre(pokemon)">
-            <input type="text" [(ngModel)]=pokemon.imagen
-                    (blur)="cambiarImagen(pokemon)">
-            <!-- eliminar pokemon -->
-            <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
-        </li>
-    </ul>
+    <!-- FORMULARIO -->
+    <div class="col">
+        <div class="crear">
+            <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+                <label for="name">Nombre</label>
+                <input type="text" formControlName="nombreNuevo" class="form-control" autofocus required placeholder="Escribe aquí el nombre de tu pokemon">
+                <small *ngIf="formulario.controls.nombreNuevo.invalid && formulario.controls.nombreNuevo.dirty"
+                    class="text-danger">Mínimo 2 carácteres y máximo 50</small>
+                    <!-- formulario.controls.nombre.invalid para sacar el mensaje sólo cuando el texto no sea correcto
+                        formulario.controls.nombre.dirty para que el mensaje no salga por pantalla al entrar en la página -->
+                <small *ngIf="formulario.controls.nombreNuevo.valid" class="text-success">Nombre correcto</small><br>
+
+                <label for="image">Imagen</label>
+                <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon">
+                
+                <!-- <button (click)="crearPokemon()" class="btn btn-success">Crear nuevo pokemon</button> -->
+                <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="Crear" />
+            </form>
+        </div>
+    </div>
 </div>
 
 
 <hr>
-<h3>Teoría</h3>
-<p>Sólo pueden acceder usuarios logeados</p>
-<p>Para proteger el acceso a esta ruta debemos usar una GUARDA / GUARD y definirla en el routing </p>
-<code>path: 'privado', component: PrivadoComponent, canActivate: [LoginGuard]</code>
-<dl>
-    <dt>canActivate</dt>
-        <dd>Guarda para indicar si se puede ativar esa ruta</dd>
-    <dt>LoginGuard</dt>
-        <dd>Guarda creada por nosotros, que devuelve un true (sí tenemos permisos para entrar) o un false (no tenemos permisos para activarlo)</dd>
-</dl>
 
+<div class="row">
+    <div class="col">
+        <h3>Teoría</h3>
+        <p>Sólo pueden acceder usuarios logeados</p>
+        <p>Para proteger el acceso a esta ruta debemos usar una GUARDA / GUARD y definirla en el routing </p>
+        <code>path: 'privado', component: PrivadoComponent, canActivate: [LoginGuard]</code>
+        <dl>
+            <dt>canActivate</dt>
+                <dd>Guarda para indicar si se puede ativar esa ruta</dd>
+            <dt>LoginGuard</dt>
+                <dd>Guarda creada por nosotros, que devuelve un true (sí tenemos permisos para entrar) o un false (no tenemos permisos para activarlo)</dd>
+        </dl>
+    </div>
+</div>
 
 
 <!-- VENTANA MODAL BOOTSTRAP PARA BORRAR POKEMON -->
