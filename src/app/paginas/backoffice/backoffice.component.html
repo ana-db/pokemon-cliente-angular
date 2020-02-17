@@ -50,8 +50,8 @@
 
     <!-- FORMULARIO -->
     <div class="col">
-        {{ formulario.value | json }}
-        {{ formulario.status | json }}
+        <!-- {{ formulario.value | json }}
+        {{ formulario.status | json }} -->
         <div class="crear">
             <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
                 <label for="id">ID</label>

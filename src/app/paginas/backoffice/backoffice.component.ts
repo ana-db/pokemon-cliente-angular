@@ -140,34 +140,61 @@ export class BackofficeComponent implements OnInit {
 
   //////////////////////////////////// formulario reactivo ////////////////////////////////////////////
   enviar( values: any ){
+
     console.trace('Enviar formulario %o', values);
 
     const nombreNuevo = values.nombreNuevo;
     const imagenNueva = values.imagenNueva;
+    const id = values.id;
     
     //creamos un objeto pokemon nuevo:
     const pokemonNuevo = new Pokemon(nombreNuevo);
-    
+
+    console.trace('Empezamos a crear un nuevo pokemon %o', pokemonNuevo);
+
     if ( nombreNuevo.trim().length > 1){
+
+      pokemonNuevo.id = id;
       pokemonNuevo.nombre = nombreNuevo;
       pokemonNuevo.imagen = imagenNueva;
       console.debug('Pokemon nuevo %o', pokemonNuevo);
 
-      this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
-        console.debug('Nuevo pokemon creado en json-server %o', datos);
+      if(id == 0){ //CREAMOS
+        this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
+          console.debug('Nuevo pokemon creado en json-server %o', datos);
+          this.nombreNuevo = ''; //limpiamos input text
+          this.imagenNueva = '';
+          this.cargarPokemons();
+  
+          this.mensaje = 'Has creado un nuevo pokemon '; 
+          this.showMensaje = true;  
+          /* this.idTareaMensaje = `id ${datos.id} `;
+          this.tituloTareaMensaje = `y titulo ${datos.titulo}`; */
+        });
+
+      }else{ //MODIFICAMOS 
+        console.trace('Empezamos a editar el pokemon %o',pokemonNuevo);
+        /*
+        pokemonNuevo.id = id;
+        this.cambiarNombre(pokemonNuevo);
+        this.cambiarImagen(pokemonNuevo);
+        */
+       this.pokemonService.modificar(pokemonNuevo).subscribe( datos => {
+        console.debug('Pokemon editado en json-server %o', datos);
         this.nombreNuevo = ''; //limpiamos input text
         this.imagenNueva = '';
         this.cargarPokemons();
 
-        this.mensaje = 'Has creado un nuevo pokemon '; 
+        this.mensaje = 'El pokemon se ha modificado correctamente'; 
         this.showMensaje = true;  
         /* this.idTareaMensaje = `id ${datos.id} `;
         this.tituloTareaMensaje = `y titulo ${datos.titulo}`; */
       });
+      }
     }else{
       this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
     } 
-
+    
   } //enviar
 
 
