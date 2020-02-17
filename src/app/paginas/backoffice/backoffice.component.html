@@ -24,11 +24,11 @@
     <!-- LISTA -->
     <div class="col">
         <div>
-            <ul>
-                <li *ngFor = "let pokemon of pokemons">
+            <ul class="list-group">
+                <li *ngFor = "let pokemon of pokemons" 
+                    (click)="cargarPokemonFormulario(pokemon)"
+                    class="list-group-item {{pokemon==pokemonSeleccionado ? 'active' :'' }}">
                     {{pokemon.id}} - {{pokemon.nombre}}
-                    <!-- editar pokemon -->
-                    <button (click)="cargarPokemonFormulario(pokemon)" class="btn btn-primary">Modificar</button>
                     <!-- eliminar pokemon -->
                     <span class="fas fa-trash-alt" (click)="eliminarPokemon(pokemon)"></span>
                 </li>

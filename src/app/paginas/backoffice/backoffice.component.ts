@@ -175,9 +175,11 @@ export class BackofficeComponent implements OnInit {
    * Función que carga los datos de un pokemon dinámicamente en el formulario para editarlos
    * @param pokemon 
    */
-  cargarPokemonFormulario(pokemon: Pokemon){
+  cargarPokemonFormulario = function(pokemon: Pokemon){
     
     console.debug('Se cargan en el formulario los datos de %o', pokemon);
+
+    this.pokemonSeleccionado = pokemon;
     
     const controlId = this.formulario.get('id');
     controlId.setValue( pokemon.id );
