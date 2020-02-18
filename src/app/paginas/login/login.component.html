@@ -3,13 +3,14 @@
 <div class="row justify-content-center align-items-center"> <!-- para centrar el fomulario necesitamos que esté dentro de las clases row y col -->
             
     <div class="col-6">
+        <!--
         <p>Cuando trabajamos con formularios, es MUY IMPORTANTE acordarnos de añadir las siguientes 
             líneas en <code>app.module.ts</code>: <code>ReactiveFormsModule</code> para formularios reactivos, 
             <code>FormsModule</code> para formularios comunes y <code>import  FormsModule, ReactiveFormsModule  from '@angular/forms';</code>
         </p>
 
         <pre>{{ formulario.value | json }}</pre>
-        <pre>{{ formulario.status | json }}</pre>
+        <pre>{{ formulario.status | json }}</pre>  -->
 
         <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
 
