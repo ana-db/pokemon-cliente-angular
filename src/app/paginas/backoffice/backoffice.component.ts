@@ -34,7 +34,7 @@ export class BackofficeComponent implements OnInit {
     this.nombreNuevo = '';
     this.imagenNueva = '';
 
-    this.mensaje = '';
+    this.mensaje = '';//{"texto":"","tipo":"alert-danger"}
     this.showMensaje = false;
     this.idPokemonMensaje = '';
     this.nombrePokemonMensaje = '';
@@ -143,6 +143,13 @@ export class BackofficeComponent implements OnInit {
           (error) => {
             console.debug('Error %o', error);
             if(error.status == 400){
+              /* con las siguientes 2 líneas corregimos el bug: 
+              this.pokemonSeleccionado = undefined; y this.cargarPokemons();
+              sin ellas, si el nombre del pokemon estaba repetido en la bd, salía el mensaje de error
+              pero la aplicación se quedaba bloqueada, dejaba de hacer las operaciones de crud */
+              this.pokemonSeleccionado = undefined;
+              this.cargarPokemons();
+              
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
               this.showMensaje = true; 
             }
@@ -164,6 +171,9 @@ export class BackofficeComponent implements OnInit {
           (error) => {
             console.debug('Error %o', error);
             if(error.status == 400){
+              this.pokemonSeleccionado = undefined;
+              this.cargarPokemons();
+
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
               this.showMensaje = true; 
             }
