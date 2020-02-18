@@ -155,6 +155,8 @@ export class BackofficeComponent implements OnInit {
               this.cargarPokemons();
 
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.idPokemonMensaje = ` `;
+              this.nombrePokemonMensaje = ` `;
               this.tipoAlert = 'danger';
               this.showMensaje = true; 
             }
@@ -170,6 +172,7 @@ export class BackofficeComponent implements OnInit {
 
             this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
             this.idPokemonMensaje = `id ${datos.id} `;
+            this.nombrePokemonMensaje = ` `;
             this.tipoAlert = 'success';
             this.showMensaje = true;  
           },
@@ -180,6 +183,8 @@ export class BackofficeComponent implements OnInit {
               this.cargarPokemons();
 
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.idPokemonMensaje = ` `;
+              this.nombrePokemonMensaje = ` `;
               this.tipoAlert = 'danger';
               this.showMensaje = true; 
             }
@@ -188,6 +193,8 @@ export class BackofficeComponent implements OnInit {
       }
     }else{
       this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
+      this.idPokemonMensaje = ` `;
+      this.nombrePokemonMensaje = ` `;
       this.tipoAlert = 'danger';
       this.showMensaje = true;  
     } 
