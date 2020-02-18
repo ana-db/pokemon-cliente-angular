@@ -9,7 +9,8 @@ import { InicioComponent } from './paginas/inicio/inicio.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PokemonPipe } from './pipes/pokemon.pipe';
 import { BackofficeComponent } from './paginas/backoffice/backoffice.component';
-import { LoginComponent } from './paginas/login/login.component'; //para llamadas por http
+import { LoginComponent } from './paginas/login/login.component';
+import { MensajeComponent } from './componentes/mensaje/mensaje.component'; //para llamadas por http
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoginComponent } from './paginas/login/login.component'; //para llamada
     InicioComponent,
     PokemonPipe,
     BackofficeComponent,
-    LoginComponent
+    LoginComponent,
+    MensajeComponent
   ],
   imports: [
     BrowserModule,
