@@ -3,7 +3,7 @@
         <h1 class="text-danger">Bienvenido al backoffice</h1>
 
         <!-- mensajes al usuario -->
-        <div *ngIf="showMensaje" class = "alert alert-primary alert-dismissible fade show" role="alert">
+        <div *ngIf="showMensaje" class = "alert alert-{{tipoAlert}} alert-dismissible fade show" role="alert">
             {{mensaje}} <b>{{idPokemonMensaje}}</b> <b>{{nombrePokemonMensaje}}</b> 
             <button (click)="showMensaje = !showMensaje" type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -51,7 +51,7 @@
                 <label for="image">Imagen</label>
                 <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon"><br>
                 
-                <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ (isCrear) ? 'Crear' : 'Modificar' }}" />
+                <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ (isCrear == false) ? 'Modificar' : 'Crear' }}" />
             </form>
         </div>
     </div>

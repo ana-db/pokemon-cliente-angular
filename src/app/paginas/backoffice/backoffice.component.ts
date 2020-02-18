@@ -20,6 +20,7 @@ export class BackofficeComponent implements OnInit {
   showMensaje: boolean;
   idPokemonMensaje: string; 
   nombrePokemonMensaje: string;
+  tipoAlert: string;
 
   formulario: FormGroup;
 
@@ -38,6 +39,7 @@ export class BackofficeComponent implements OnInit {
     this.showMensaje = false;
     this.idPokemonMensaje = '';
     this.nombrePokemonMensaje = '';
+    this.tipoAlert = 'primary';
 
     //construimos formulario:
     this.formulario = this.builder.group({
@@ -79,6 +81,7 @@ export class BackofficeComponent implements OnInit {
       error => {
           console.warn('Petición errónea data o%', error);
           this.mensaje = 'Error de conexión: el servicio rest no funciona. Posiblemente no esté arrancado';
+          this.tipoAlert = 'danger';
           this.showMensaje = true;
       }
     ); //fin llamada a getAll() con pokemonService
@@ -97,6 +100,7 @@ export class BackofficeComponent implements OnInit {
         this.mensaje = 'Has eliminado el pokemon con ';
         this.idPokemonMensaje = `id ${pokemon.id} `;
         this.nombrePokemonMensaje = `y nombre ${pokemon.nombre}`;
+        this.tipoAlert = 'success';
         this.showMensaje = true;
         this.cargarPokemons();
       } ); 
@@ -131,13 +135,13 @@ export class BackofficeComponent implements OnInit {
       if(id == 0){ //CREAMOS
         this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
             console.debug('Nuevo pokemon creado en json-server %o', datos);
-            this.nombreNuevo = ''; //limpiamos input text
-            this.imagenNueva = '';
+            this.inicializarNuevo(); //inicializamos el formulario a 0 para limpiarlo
             this.cargarPokemons();
     
             this.mensaje = 'Has creado un nuevo pokemon con '; 
             this.idPokemonMensaje = `id ${datos.id} `;
             this.nombrePokemonMensaje = `y nombre ${datos.nombre}`;
+            this.tipoAlert = 'success';
             this.showMensaje = true;  
           },
           (error) => {
@@ -149,8 +153,9 @@ export class BackofficeComponent implements OnInit {
               pero la aplicación se quedaba bloqueada, dejaba de hacer las operaciones de crud */
               this.pokemonSeleccionado = undefined;
               this.cargarPokemons();
-              
+
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.tipoAlert = 'danger';
               this.showMensaje = true; 
             }
           }
@@ -160,12 +165,12 @@ export class BackofficeComponent implements OnInit {
         
         this.pokemonService.modificar(pokemonNuevo).subscribe( datos => {
             console.debug('Pokemon editado en json-server %o', datos);
-            this.nombreNuevo = ''; //limpiamos input text
-            this.imagenNueva = '';
+            //this.cargarPokemonFormulario(pokemonNuevo); //this.inicializarNuevo(); //inicializamos el formulario a 0 para limpiarlo
             this.cargarPokemons();
 
             this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
             this.idPokemonMensaje = `id ${datos.id} `;
+            this.tipoAlert = 'success';
             this.showMensaje = true;  
           },
           (error) => {
@@ -175,6 +180,7 @@ export class BackofficeComponent implements OnInit {
               this.cargarPokemons();
 
               this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.tipoAlert = 'danger';
               this.showMensaje = true; 
             }
           }
@@ -182,6 +188,7 @@ export class BackofficeComponent implements OnInit {
       }
     }else{
       this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
+      this.tipoAlert = 'danger';
       this.showMensaje = true;  
     } 
     

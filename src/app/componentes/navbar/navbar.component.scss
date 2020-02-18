@@ -1,6 +1,12 @@
 //Variables SASS:
-$color_green:#009C6B;
+$color:#009C6B;
 
 .navbar{
-    background-color: $color_green;
+    background-color: $color;
 }
+
+/*
+.navbar-brand, .navbar-light .navbar-nav .nav-link{
+    color: white;
+}
+*/
