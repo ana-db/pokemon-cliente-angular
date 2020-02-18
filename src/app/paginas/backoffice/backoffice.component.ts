@@ -130,30 +130,45 @@ export class BackofficeComponent implements OnInit {
 
       if(id == 0){ //CREAMOS
         this.pokemonService.crear(pokemonNuevo).subscribe( datos => {
-          console.debug('Nuevo pokemon creado en json-server %o', datos);
-          this.nombreNuevo = ''; //limpiamos input text
-          this.imagenNueva = '';
-          this.cargarPokemons();
-  
-          this.mensaje = 'Has creado un nuevo pokemon con '; 
-          this.idPokemonMensaje = `id ${datos.id} `;
-          this.nombrePokemonMensaje = `y nombre ${datos.nombre}`;
-          this.showMensaje = true;  
-        });
-
+            console.debug('Nuevo pokemon creado en json-server %o', datos);
+            this.nombreNuevo = ''; //limpiamos input text
+            this.imagenNueva = '';
+            this.cargarPokemons();
+    
+            this.mensaje = 'Has creado un nuevo pokemon con '; 
+            this.idPokemonMensaje = `id ${datos.id} `;
+            this.nombrePokemonMensaje = `y nombre ${datos.nombre}`;
+            this.showMensaje = true;  
+          },
+          (error) => {
+            console.debug('Error %o', error);
+            if(error.status == 400){
+              this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.showMensaje = true; 
+            }
+          }
+        );
       }else{ //MODIFICAMOS 
         console.trace('Empezamos a editar el pokemon %o',pokemonNuevo);
         
         this.pokemonService.modificar(pokemonNuevo).subscribe( datos => {
-          console.debug('Pokemon editado en json-server %o', datos);
-          this.nombreNuevo = ''; //limpiamos input text
-          this.imagenNueva = '';
-          this.cargarPokemons();
+            console.debug('Pokemon editado en json-server %o', datos);
+            this.nombreNuevo = ''; //limpiamos input text
+            this.imagenNueva = '';
+            this.cargarPokemons();
 
-          this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
-          this.idPokemonMensaje = `id ${datos.id} `;
-          this.showMensaje = true;  
-        });
+            this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
+            this.idPokemonMensaje = `id ${datos.id} `;
+            this.showMensaje = true;  
+          },
+          (error) => {
+            console.debug('Error %o', error);
+            if(error.status == 400){
+              this.mensaje = 'El nombre ya existe en la base de datos, por favor elige otro';
+              this.showMensaje = true; 
+            }
+          }
+        );
       }
     }else{
       this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
