@@ -12,3 +12,7 @@ input.btn.btn-success.btn-block{
 li{
     list-style: none; //quitamos el puntito negro de la numeración
 }
+
+button.btn.btn-primary{
+    background-color: $color;
+}

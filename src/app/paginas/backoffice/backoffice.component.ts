@@ -23,6 +23,8 @@ export class BackofficeComponent implements OnInit {
 
   formulario: FormGroup;
 
+  isCrear: boolean;
+
   constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
 
     console.trace('BackofficeComponent constructor');
@@ -44,6 +46,8 @@ export class BackofficeComponent implements OnInit {
       imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
       id: ['0'],
     }); //llaves y paréntesis porque tenemos un objeto
+
+    isCrear: false;
 
   }
 
@@ -140,16 +144,16 @@ export class BackofficeComponent implements OnInit {
       }else{ //MODIFICAMOS 
         console.trace('Empezamos a editar el pokemon %o',pokemonNuevo);
         
-       this.pokemonService.modificar(pokemonNuevo).subscribe( datos => {
-        console.debug('Pokemon editado en json-server %o', datos);
-        this.nombreNuevo = ''; //limpiamos input text
-        this.imagenNueva = '';
-        this.cargarPokemons();
+        this.pokemonService.modificar(pokemonNuevo).subscribe( datos => {
+          console.debug('Pokemon editado en json-server %o', datos);
+          this.nombreNuevo = ''; //limpiamos input text
+          this.imagenNueva = '';
+          this.cargarPokemons();
 
-        this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
-        this.idPokemonMensaje = `id ${datos.id} `;
-        this.showMensaje = true;  
-      });
+          this.mensaje = 'Se ha modificado correctamente el pokemon con '; 
+          this.idPokemonMensaje = `id ${datos.id} `;
+          this.showMensaje = true;  
+        });
       }
     }else{
       this.mensaje = 'El nombre del pokemon no es válido, debe contener al menos 2 caracteres';
@@ -177,8 +181,30 @@ export class BackofficeComponent implements OnInit {
 
     const controlImagen = this.formulario.get('imagenNueva');
     controlImagen.setValue( pokemon.imagen );
+
+    this.isCrear = false;
     
-  }
+  }//fin cargarPokemonFormulario
+
+
+  /**
+   * Función que inicializa los datos del formulario a 0 para que el usuario los rellene
+   */
+  inicializarNuevo = function(){
+    console.debug('Se inicializan los datos para crear nuevo pokemon en el formulario');
+
+    const controlId = this.formulario.get('id');
+    controlId.setValue( 0 );
+
+    const controlNombre = this.formulario.get('nombreNuevo');
+    controlNombre.setValue('');
+
+    const controlImagen = this.formulario.get('imagenNueva');
+    controlImagen.setValue('');
+
+    this.isCrear = true;
+
+  }//fin inicializarNuevo
 
 
 }//fin BackofficeComponent
