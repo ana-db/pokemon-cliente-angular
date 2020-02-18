@@ -1,3 +1,12 @@
+
+	Crear tags para github desde Visual Studio Code y Angular:
+	- Crear tag: git tag -a CRUD-nombre-imagen -m "crud con nombre e imagen del pokemon"
+			git tag -a NOMBRE-TAG -m "COMENTARIO"
+	- Subir a github tag: git push origin CRUD-nombre-imagen
+			git push origin NOMBRE-TAG
+
+----------------------------------------------
+
 pokemon-cliente-angular
 
 
