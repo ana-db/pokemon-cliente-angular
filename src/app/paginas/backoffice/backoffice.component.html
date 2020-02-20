@@ -16,6 +16,9 @@
 <div class="row">
     <!-- LISTA -->
     <div class="col">
+
+        {{ pokemonSeleccionado | json }}
+
         <div>
             <ul class="list-group">
                 <li *ngFor = "let pokemon of pokemons" 

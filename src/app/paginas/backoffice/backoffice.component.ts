@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -74,16 +75,7 @@ export class BackofficeComponent implements OnInit {
     this.cargarPokemons();
 
     //llamamos al service para obtener la lista de habilidades:
-    this.pokemonService.getAllHabilidades().subscribe( 
-      data => {
-          console.debug('Petición correcta data o%', data); 
-          this.habilidades = data; 
-          console.trace('habilidades ngOnInit %o', this.habilidades); 
-          
-          // map habilidades del serviucio rest a options para checks
-          /* this.habilidades.map ( el => { nombre: el.nombre, id: el.id, checked: false });*/
-      }
-    ); //fin llamada a getAllHabilidades() con pokemonService
+    this.cargarHabilidades();
 
   }
 
@@ -115,6 +107,28 @@ export class BackofficeComponent implements OnInit {
   } //fin cargarPokemons
 
 
+  /**
+   * Llama al servicio para cargar todas las habilidades
+   */
+  private cargarHabilidades(): void{ //no devuelve nada
+
+    //llamamos al service para obtener la lista de habilidades:
+    this.pokemonService.getAllHabilidades().subscribe( 
+      data => {
+          console.debug('Petición correcta data o%', data); 
+          this.habilidades = data; 
+          console.trace('habilidades ngOnInit %o', this.habilidades); 
+          
+          // map habilidades del servicio rest a options para checks
+          this.habilidades.map ( el => { 
+            return { nombre: el.nombre, id: el.id, checked: false };
+          });
+      }
+    ); 
+
+  }
+
+
   //////////////////// crear formulario con array habilidades ////////////////////
   private crearFormulario() {
 
@@ -128,7 +142,8 @@ export class BackofficeComponent implements OnInit {
                                     Validators.maxLength(50)
                                   ])
                               ),
-      imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
+      imagenNueva: ['https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png', 
+                    [Validators.required, Validators.maxLength(150)]],
       habilidades:  this.builder.array( [], // creamos array sin habilidades
                                   // [ this.crearFormGroupHabilidad() ] <- meter habilidades segun se contruye
                                   Validators.compose(
@@ -310,6 +325,25 @@ export class BackofficeComponent implements OnInit {
     const controlImagen = this.formulario.get('imagenNueva');
     controlImagen.setValue( pokemon.imagen );
 
+    // pasando habilidades-checks del pokemon al formulario:
+    /*
+    const pokehab = this.pokemonSeleccionado.habilidades.map ( el => { 
+      return { nombre: el.nombre, id: el.id, checked: false };
+    });
+
+    if (this.pokemonSeleccionado) {
+      this.habilidades = this.habilidades.map(h => {
+        console.debug('map habilidades');
+        const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
+        if (posicion !== -1) {
+          h.checked = true;
+        } else {
+          h.checked = false;
+        }
+        return h;
+      });
+    }
+    */
     this.isCrear = false;
     
   }//fin cargarPokemonFormulario
@@ -328,7 +362,7 @@ export class BackofficeComponent implements OnInit {
     controlNombre.setValue('');
 
     const controlImagen = this.formulario.get('imagenNueva');
-    controlImagen.setValue('');
+    controlImagen.setValue('https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png');
 
     this.isCrear = true;
 
