@@ -111,6 +111,7 @@ export class BackofficeComponent implements OnInit {
   } //fin cargarPokemons
 
 
+  //////////////////// crear formulario con array habilidades ////////////////////
   private crearFormulario() {
 
     this.formulario = this.builder.group({
@@ -138,6 +139,38 @@ export class BackofficeComponent implements OnInit {
 
   }// crearFormulario
 
+
+  private crearFormGroupHabilidad(): FormGroup {
+    return this.builder.group({
+              id: new FormControl(0),
+              nombre: new FormControl('')
+            });
+  }
+
+
+  checkCambiado( option: any ) {
+
+    option.checked = !option.checked;          // TODO ver porque no cambia el valor del check sin esta linea
+    console.debug('checkCambiado %o', option);
+
+    const habilidad = this.crearFormGroupHabilidad();
+    habilidad.get('id').setValue( option.id );
+    habilidad.get('nombre').setValue( option.nombre );
+
+    if( option.checked == true ){
+      console.log('BackofficeComponent checkCambiado, se añade otra habilidad '); 
+      this.formHabilidades.push(habilidad);
+    }else{
+      console.log('BackofficeComponent checkCambiado, se quita una habilidad '); 
+      if( this.formHabilidades.length > 1 ){    
+        this.formHabilidades.removeAt( this.formHabilidades.value.findIndex(el => el.id === option.id) );
+      } 
+    }
+    
+
+  }// checkCambiado
+
+  //////////////////// fin crear formulario con array habilidades ////////////////////
 
   eliminarPokemon(pokemon: Pokemon){
 
@@ -169,6 +202,7 @@ export class BackofficeComponent implements OnInit {
     const nombreNuevo = values.nombreNuevo;
     const imagenNueva = values.imagenNueva;
     const id = values.id;
+    const habilidades = values.habilidades; //array con habilidades
     
     //creamos un objeto pokemon nuevo:
     const pokemonNuevo = new Pokemon(nombreNuevo);
@@ -180,6 +214,7 @@ export class BackofficeComponent implements OnInit {
       pokemonNuevo.id = id;
       pokemonNuevo.nombre = nombreNuevo;
       pokemonNuevo.imagen = imagenNueva;
+      pokemonNuevo.habilidades = habilidades; //array con habilidades
       console.debug('Pokemon nuevo %o', pokemonNuevo);
 
       if(id == 0){ //CREAMOS

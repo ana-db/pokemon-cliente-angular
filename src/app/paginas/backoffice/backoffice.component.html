@@ -58,13 +58,17 @@
                     <label>
                         <input type="checkbox"
                             name="options"
-                            (change)="checkCambiado(option)"
+                            (change)="checkCambiado(option)" 
                             value="{{option.id}}"
                         />
+                        <!-- (change)="checkCambiado(option)" 
+                            con este evento vamos guardando en el array las habilidades con check a true y
+                            sacando las que lo tengan a flase
+                        -->
                         {{option.nombre}}
-                    </label>
-                </div>
-                
+                    </label>   
+                </div>  
+                               
                 <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ (isCrear == false) ? 'Modificar' : 'Crear' }}" />
             </form>
         </div>
