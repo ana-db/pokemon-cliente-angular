@@ -53,19 +53,19 @@
                 <label for="image">Imagen</label>
                 <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon"><br>
 
-                <p>Selecciona habilidades: </p>
-                <div *ngFor="let option of options">
+                <p>Selecciona al menos 1 habilidad: </p>
+                <div *ngFor="let habilidad of habilidades">
                     <label>
                         <input type="checkbox"
-                            name="options"
-                            (change)="checkCambiado(option)" 
-                            value="{{option.id}}"
+                            name="habilidades"
+                            (change)="checkCambiado(habilidad)" 
+                            value="{{habilidad.id}}"
                         />
                         <!-- (change)="checkCambiado(option)" 
                             con este evento vamos guardando en el array las habilidades con check a true y
                             sacando las que lo tengan a flase
                         -->
-                        {{option.nombre}}
+                        {{habilidad.nombre}}
                     </label>   
                 </div>  
                                

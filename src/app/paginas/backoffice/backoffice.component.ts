@@ -30,19 +30,11 @@ export class BackofficeComponent implements OnInit {
   habilidades: Array<any>;
   formHabilidades: FormArray;
 
-  options = [
+  /* options = [
     {nombre: 'impasible', id: '1', checked: false},
     {nombre: 'rayos', id: '2', checked: false},
     {nombre: 'oloroso', id: '3', checked: false}
-  ];
-
-  // map habilidades del serviucio rest a options para checks
-  /* this.habilidades.map ( el => {
-                                    nombre: el.nombre,
-                                    id: el.id,
-                                    checked: false
-                                  });
-  */
+  ]; */
 
 
   constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
@@ -80,6 +72,18 @@ export class BackofficeComponent implements OnInit {
 
     //en ngOnInit llamamos al service para obtener la lista de todos los pokemon:
     this.cargarPokemons();
+
+    //llamamos al service para obtener la lista de habilidades:
+    this.pokemonService.getAllHabilidades().subscribe( 
+      data => {
+          console.debug('Petición correcta data o%', data); 
+          this.habilidades = data; 
+          console.trace('habilidades ngOnInit %o', this.habilidades); 
+          
+          // map habilidades del serviucio rest a options para checks
+          /* this.habilidades.map ( el => { nombre: el.nombre, id: el.id, checked: false });*/
+      }
+    ); //fin llamada a getAllHabilidades() con pokemonService
 
   }
 
