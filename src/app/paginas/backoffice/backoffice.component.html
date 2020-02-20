@@ -33,8 +33,10 @@
     <div class="col">
 
         <button (click)="inicializarNuevo()" type="button" class="btn btn-primary">Nuevo</button>
-        <!-- {{ formulario.value | json }}
-        {{ formulario.status | json }} -->
+        
+        {{ formulario.value | json }}
+        {{ formulario.status | json }}
+        
         <div class="crear">
             <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
                 <label for="id">ID</label>
@@ -50,6 +52,18 @@
 
                 <label for="image">Imagen</label>
                 <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon"><br>
+
+                <p>Selecciona habilidades: </p>
+                <div *ngFor="let option of options">
+                    <label>
+                        <input type="checkbox"
+                            name="options"
+                            (change)="checkCambiado(option)"
+                            value="{{option.id}}"
+                        />
+                        {{option.nombre}}
+                    </label>
+                </div>
                 
                 <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ (isCrear == false) ? 'Modificar' : 'Crear' }}" />
             </form>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -26,6 +26,25 @@ export class BackofficeComponent implements OnInit {
 
   isCrear: boolean;
 
+  //gestionamos habilidades:
+  habilidades: Array<any>;
+  formHabilidades: FormArray;
+
+  options = [
+    {nombre: 'impasible', id: '1', checked: false},
+    {nombre: 'rayos', id: '2', checked: false},
+    {nombre: 'oloroso', id: '3', checked: false}
+  ];
+
+  // map habilidades del serviucio rest a options para checks
+  /* this.habilidades.map ( el => {
+                                    nombre: el.nombre,
+                                    id: el.id,
+                                    checked: false
+                                  });
+  */
+
+
   constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
 
     console.trace('BackofficeComponent constructor');
@@ -41,15 +60,18 @@ export class BackofficeComponent implements OnInit {
     this.nombrePokemonMensaje = '';
     this.tipoAlert = 'primary';
 
-    //construimos formulario:
+    //construimos formulario con la función crearFormulario() para hacerlo más claro:
+    this.crearFormulario();
+    /*
     this.formulario = this.builder.group({
       //definimos los FormControl == inputs [value, validaciones]
       nombreNuevo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
       id: ['0'],
     }); //llaves y paréntesis porque tenemos un objeto
+    */
 
-    isCrear: false;
+    this.isCrear = false;
 
   }
 
@@ -86,7 +108,35 @@ export class BackofficeComponent implements OnInit {
       }
     ); //fin llamada a getAll() con pokemonService
 
-  } //fin cargarTareas
+  } //fin cargarPokemons
+
+
+  private crearFormulario() {
+
+    this.formulario = this.builder.group({
+      id: new FormControl(0),
+      nombreNuevo: new FormControl('',
+                              Validators.compose(
+                                  [
+                                    Validators.required,
+                                    Validators.minLength(2),
+                                    Validators.maxLength(50)
+                                  ])
+                              ),
+      imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
+      habilidades:  this.builder.array( [], // creamos array sin habilidades
+                                  // [ this.crearFormGroupHabilidad() ] <- meter habilidades segun se contruye
+                                  Validators.compose(
+                                    [
+                                      Validators.required,
+                                      Validators.minLength(1)
+                                    ])
+                                )
+    });//llaves y paréntesis porque tenemos un objeto
+
+    this.formHabilidades = this.formulario.get('habilidades') as FormArray;
+
+  }// crearFormulario
 
 
   eliminarPokemon(pokemon: Pokemon){
