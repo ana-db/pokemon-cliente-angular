@@ -314,6 +314,8 @@ export class BackofficeComponent implements OnInit {
     
     console.debug('Se cargan en el formulario los datos de %o', pokemon);
 
+    this.crearFormulario(); //para inicializar los campos del formulario
+
     this.pokemonSeleccionado = pokemon;
     
     const controlId = this.formulario.get('id');
@@ -341,7 +343,13 @@ export class BackofficeComponent implements OnInit {
         const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
         if (posicion !== -1) {
           h.checked = true; //como encontramos la posición, ponemos a true su checked
-          this.habilidades.forEach( habilidad => this.habilidades.push(habilidad) ); //guardamos en el array de habilidades, la habilidad que ya tiene el checked a true
+
+          //creamos una nueva habilidad y guardamos en el formulario:
+          const habilidad = this.crearFormGroupHabilidad();
+          habilidad.get('id').setValue( h.id );
+          habilidad.get('nombre').setValue( h.nombre );
+          this.formHabilidades.push(habilidad); //guardamos en el formulario
+
         } else {
           h.checked = false;
         }
@@ -369,8 +377,10 @@ export class BackofficeComponent implements OnInit {
     const controlImagen = this.formulario.get('imagenNueva');
     controlImagen.setValue('https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png');
 
-    //quitamos los checks marcados cuando inicializamos:
-    this.habilidades.forEach( habilidad => habilidad.checked = false );    
+    //quitamos los checks marcados del array de habilidades cuando inicializamos:
+    this.habilidades.forEach( habilidad => habilidad.checked = false ); 
+    //también hay que resetear el array del formulario:
+   this.crearFormulario();
     
     this.isCrear = true;
 
