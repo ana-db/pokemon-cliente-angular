@@ -181,9 +181,9 @@ export class BackofficeComponent implements OnInit {
       this.formHabilidades.push(habilidad);
     }else{
       console.log('BackofficeComponent checkCambiado, se quita una habilidad '); 
-      if( this.formHabilidades.length > 1 ){    
+//      if( this.formHabilidades.length > 1 ){    
         this.formHabilidades.removeAt( this.formHabilidades.value.findIndex(el => el.id === option.id) );
-      } 
+//      } 
     }
     
 
@@ -326,9 +326,13 @@ export class BackofficeComponent implements OnInit {
     controlImagen.setValue( pokemon.imagen );
 
     // pasando habilidades-checks del pokemon al formulario:
-    /*
+//    
     const pokehab = this.pokemonSeleccionado.habilidades.map ( el => { 
-      return { nombre: el.nombre, id: el.id, checked: false };
+      return { nombre: el.nombre, id: el.id, checked: true };
+    });
+
+    this.habilidades = this.habilidades.map( el => {
+      return {nombre: el.nombre, id: el.id, checked: false}
     });
 
     if (this.pokemonSeleccionado) {
@@ -336,14 +340,15 @@ export class BackofficeComponent implements OnInit {
         console.debug('map habilidades');
         const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
         if (posicion !== -1) {
-          h.checked = true;
+          h.checked = true; //como encontramos la posición, ponemos a true su checked
+          this.habilidades.forEach( habilidad => this.habilidades.push(habilidad) ); //guardamos en el array de habilidades, la habilidad que ya tiene el checked a true
         } else {
           h.checked = false;
         }
         return h;
       });
     }
-    */
+//    
     this.isCrear = false;
     
   }//fin cargarPokemonFormulario
@@ -364,6 +369,9 @@ export class BackofficeComponent implements OnInit {
     const controlImagen = this.formulario.get('imagenNueva');
     controlImagen.setValue('https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png');
 
+    //quitamos los checks marcados cuando inicializamos:
+    this.habilidades.forEach( habilidad => habilidad.checked = false );    
+    
     this.isCrear = true;
 
   }//fin inicializarNuevo

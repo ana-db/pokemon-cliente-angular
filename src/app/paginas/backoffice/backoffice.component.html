@@ -63,10 +63,14 @@
                             name="habilidades"
                             (change)="checkCambiado(habilidad)" 
                             value="{{habilidad.id}}"
+                            [checked]="habilidad.checked"
                         />
                         <!-- (change)="checkCambiado(option)" 
                             con este evento vamos guardando en el array las habilidades con check a true y
                             sacando las que lo tengan a flase
+
+                            [checked]="habilidad.checked"
+                            para quitar los checks marcados cuando inicializamos
                         -->
                         {{habilidad.nombre}}
                     </label>   
