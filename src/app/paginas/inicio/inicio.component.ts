@@ -20,6 +20,8 @@ export class InicioComponent implements OnInit {
   habilidadesNombre: Array<any>;
   options: Array<any>;
 
+  busqueda: string;
+
   constructor( private pokemonService: PokemonService ) { //inyectamos el servicio pokemon
 
     console.trace('InicioComponent constructor');
@@ -33,6 +35,8 @@ export class InicioComponent implements OnInit {
 
     this.habilidadesNombre = [];
     this.options = [];
+
+    this.busqueda = '';
 
   } //fin constructor
 
@@ -54,7 +58,7 @@ export class InicioComponent implements OnInit {
                                   no tenemos que hacer más llamadas para recoger otros datos porque data 
                                   los tiene todos, con asignarlos al array de pokemos ya está
                                 */
-                               this.pokemonSeleccionado = this.pokemons[0];
+          this.pokemonSeleccionado = this.pokemons[0];
           console.trace('pokemons ngOnInit %o', this.pokemons);
           this.habilidadesPokemon = this.pokemons.map( el => el.habilidades );                   
           this.mensaje = 'Lista de Pokemon cargada correctamente desde http://localhost:8080/pokemon-rest/api/pokemon/';   

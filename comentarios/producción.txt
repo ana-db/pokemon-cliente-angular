@@ -1,0 +1,3 @@
+http://www.thejavageek.com/2018/01/04/deploying-angular-app-tomcat/
+
+ng build --prod --base-href=/pokemon-angular-ana/

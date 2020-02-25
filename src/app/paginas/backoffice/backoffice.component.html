@@ -17,7 +17,7 @@
     <!-- LISTA -->
     <div class="col">
 
-        {{ pokemonSeleccionado | json }}
+        <!-- {{ pokemonSeleccionado | json }} -->
 
         <div>
             <ul class="list-group">
@@ -37,8 +37,8 @@
 
         <button (click)="inicializarNuevo()" type="button" class="btn btn-primary">Nuevo</button>
         
-        {{ formulario.value | json }}
-        {{ formulario.status | json }}
+        <!-- {{ formulario.value | json }}
+        {{ formulario.status | json }} -->
         
         <div class="crear">
             <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
