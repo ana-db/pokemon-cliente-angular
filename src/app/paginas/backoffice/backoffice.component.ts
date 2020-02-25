@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -26,6 +27,17 @@ export class BackofficeComponent implements OnInit {
 
   isCrear: boolean;
 
+  //gestionamos habilidades:
+  habilidades: Array<any>;
+  formHabilidades: FormArray;
+
+  /* options = [
+    {nombre: 'impasible', id: '1', checked: false},
+    {nombre: 'rayos', id: '2', checked: false},
+    {nombre: 'oloroso', id: '3', checked: false}
+  ]; */
+
+
   constructor( private pokemonService: PokemonService, private builder: FormBuilder ) { 
 
     console.trace('BackofficeComponent constructor');
@@ -41,15 +53,18 @@ export class BackofficeComponent implements OnInit {
     this.nombrePokemonMensaje = '';
     this.tipoAlert = 'primary';
 
-    //construimos formulario:
+    //construimos formulario con la función crearFormulario() para hacerlo más claro:
+    this.crearFormulario();
+    /*
     this.formulario = this.builder.group({
       //definimos los FormControl == inputs [value, validaciones]
       nombreNuevo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       imagenNueva: ['', [Validators.required, Validators.maxLength(150)]],
       id: ['0'],
     }); //llaves y paréntesis porque tenemos un objeto
+    */
 
-    isCrear: false;
+    this.isCrear = false;
 
   }
 
@@ -58,6 +73,9 @@ export class BackofficeComponent implements OnInit {
 
     //en ngOnInit llamamos al service para obtener la lista de todos los pokemon:
     this.cargarPokemons();
+
+    //llamamos al service para obtener la lista de habilidades:
+    this.cargarHabilidades();
 
   }
 
@@ -86,8 +104,92 @@ export class BackofficeComponent implements OnInit {
       }
     ); //fin llamada a getAll() con pokemonService
 
-  } //fin cargarTareas
+  } //fin cargarPokemons
 
+
+  /**
+   * Llama al servicio para cargar todas las habilidades
+   */
+  private cargarHabilidades(): void{ //no devuelve nada
+
+    //llamamos al service para obtener la lista de habilidades:
+    this.pokemonService.getAllHabilidades().subscribe( 
+      data => {
+          console.debug('Petición correcta data o%', data); 
+          this.habilidades = data; 
+          console.trace('habilidades ngOnInit %o', this.habilidades); 
+          
+          // map habilidades del servicio rest a options para checks
+          this.habilidades.map ( el => { 
+            return { nombre: el.nombre, id: el.id, checked: false };
+          });
+      }
+    ); 
+
+  }
+
+
+  //////////////////// crear formulario con array habilidades ////////////////////
+  private crearFormulario() {
+
+    this.formulario = this.builder.group({
+      id: new FormControl(0),
+      nombreNuevo: new FormControl('',
+                              Validators.compose(
+                                  [
+                                    Validators.required,
+                                    Validators.minLength(2),
+                                    Validators.maxLength(50)
+                                  ])
+                              ),
+      imagenNueva: ['https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png', 
+                    [Validators.required, Validators.maxLength(150)]],
+      habilidades:  this.builder.array( [], // creamos array sin habilidades
+                                  // [ this.crearFormGroupHabilidad() ] <- meter habilidades segun se contruye
+                                  Validators.compose(
+                                    [
+                                      Validators.required,
+                                      Validators.minLength(1)
+                                    ])
+                                )
+    });//llaves y paréntesis porque tenemos un objeto
+
+    this.formHabilidades = this.formulario.get('habilidades') as FormArray;
+
+  }// crearFormulario
+
+
+  private crearFormGroupHabilidad(): FormGroup {
+    return this.builder.group({
+              id: new FormControl(0),
+              nombre: new FormControl('')
+            });
+  }
+
+
+  checkCambiado( option: any ) {
+
+    option.checked = !option.checked;          // TODO ver porque no cambia el valor del check sin esta linea
+    console.debug('checkCambiado %o', option);
+
+    const habilidad = this.crearFormGroupHabilidad();
+    habilidad.get('id').setValue( option.id );
+    habilidad.get('nombre').setValue( option.nombre );
+
+    if( option.checked == true ){
+      console.log('BackofficeComponent checkCambiado, se añade otra habilidad '); 
+      this.formHabilidades.push(habilidad);
+    }else{
+      console.log('BackofficeComponent checkCambiado, se quita una habilidad '); 
+//      if( this.formHabilidades.length > 1 ){    
+        this.formHabilidades.removeAt( this.formHabilidades.value.findIndex(el => el.id === option.id) );
+//      } 
+    }
+    
+
+  }// checkCambiado
+
+  //////////////////// fin crear formulario con array habilidades ////////////////////
 
   eliminarPokemon(pokemon: Pokemon){
 
@@ -119,6 +221,7 @@ export class BackofficeComponent implements OnInit {
     const nombreNuevo = values.nombreNuevo;
     const imagenNueva = values.imagenNueva;
     const id = values.id;
+    const habilidades = values.habilidades; //array con habilidades
     
     //creamos un objeto pokemon nuevo:
     const pokemonNuevo = new Pokemon(nombreNuevo);
@@ -130,6 +233,7 @@ export class BackofficeComponent implements OnInit {
       pokemonNuevo.id = id;
       pokemonNuevo.nombre = nombreNuevo;
       pokemonNuevo.imagen = imagenNueva;
+      pokemonNuevo.habilidades = habilidades; //array con habilidades
       console.debug('Pokemon nuevo %o', pokemonNuevo);
 
       if(id == 0){ //CREAMOS
@@ -210,6 +314,8 @@ export class BackofficeComponent implements OnInit {
     
     console.debug('Se cargan en el formulario los datos de %o', pokemon);
 
+    this.crearFormulario(); //para inicializar los campos del formulario
+
     this.pokemonSeleccionado = pokemon;
     
     const controlId = this.formulario.get('id');
@@ -221,6 +327,36 @@ export class BackofficeComponent implements OnInit {
     const controlImagen = this.formulario.get('imagenNueva');
     controlImagen.setValue( pokemon.imagen );
 
+    // pasando habilidades-checks del pokemon al formulario:
+//    
+    const pokehab = this.pokemonSeleccionado.habilidades.map ( el => { 
+      return { nombre: el.nombre, id: el.id, checked: true };
+    });
+
+    this.habilidades = this.habilidades.map( el => {
+      return {nombre: el.nombre, id: el.id, checked: false}
+    });
+
+    if (this.pokemonSeleccionado) {
+      this.habilidades = this.habilidades.map(h => {
+        console.debug('map habilidades');
+        const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
+        if (posicion !== -1) {
+          h.checked = true; //como encontramos la posición, ponemos a true su checked
+
+          //creamos una nueva habilidad y guardamos en el formulario:
+          const habilidad = this.crearFormGroupHabilidad();
+          habilidad.get('id').setValue( h.id );
+          habilidad.get('nombre').setValue( h.nombre );
+          this.formHabilidades.push(habilidad); //guardamos en el formulario
+
+        } else {
+          h.checked = false;
+        }
+        return h;
+      });
+    }
+//    
     this.isCrear = false;
     
   }//fin cargarPokemonFormulario
@@ -239,8 +375,13 @@ export class BackofficeComponent implements OnInit {
     controlNombre.setValue('');
 
     const controlImagen = this.formulario.get('imagenNueva');
-    controlImagen.setValue('');
+    controlImagen.setValue('https://cdn.pixabay.com/photo/2019/11/27/14/06/pokemon-4657023_960_720.png');
 
+    //quitamos los checks marcados del array de habilidades cuando inicializamos:
+    this.habilidades.forEach( habilidad => habilidad.checked = false ); 
+    //también hay que resetear el array del formulario:
+   this.crearFormulario();
+    
     this.isCrear = true;
 
   }//fin inicializarNuevo

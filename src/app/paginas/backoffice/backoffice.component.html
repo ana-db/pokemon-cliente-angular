@@ -16,6 +16,9 @@
 <div class="row">
     <!-- LISTA -->
     <div class="col">
+
+        {{ pokemonSeleccionado | json }}
+
         <div>
             <ul class="list-group">
                 <li *ngFor = "let pokemon of pokemons" 
@@ -33,8 +36,10 @@
     <div class="col">
 
         <button (click)="inicializarNuevo()" type="button" class="btn btn-primary">Nuevo</button>
-        <!-- {{ formulario.value | json }}
-        {{ formulario.status | json }} -->
+        
+        {{ formulario.value | json }}
+        {{ formulario.status | json }}
+        
         <div class="crear">
             <form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
                 <label for="id">ID</label>
@@ -50,7 +55,27 @@
 
                 <label for="image">Imagen</label>
                 <input type="text" formControlName="imagenNueva" class="form-control" required placeholder="Escribe aquí la url de la imagen de tu pokemon"><br>
-                
+
+                <p>Selecciona al menos 1 habilidad: </p>
+                <div *ngFor="let habilidad of habilidades">
+                    <label>
+                        <input type="checkbox"
+                            name="habilidades"
+                            (change)="checkCambiado(habilidad)" 
+                            value="{{habilidad.id}}"
+                            [checked]="habilidad.checked"
+                        />
+                        <!-- (change)="checkCambiado(option)" 
+                            con este evento vamos guardando en el array las habilidades con check a true y
+                            sacando las que lo tengan a flase
+
+                            [checked]="habilidad.checked"
+                            para quitar los checks marcados cuando inicializamos
+                        -->
+                        {{habilidad.nombre}}
+                    </label>   
+                </div>  
+                               
                 <input type="submit" class="btn btn-success btn-block" [disabled]="formulario.invalid" value="{{ (isCrear == false) ? 'Modificar' : 'Crear' }}" />
             </form>
         </div>

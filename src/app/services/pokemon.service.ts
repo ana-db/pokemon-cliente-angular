@@ -63,4 +63,11 @@ export class PokemonService implements IPokemonService {
     return this.http.put<Pokemon>(url, pokemon);
   } //fin modificar
 
+
+  getAllHabilidades(): Observable<any> {
+    const url = `http://localhost:8080/pokemon-rest/habilidad/`;
+    console.trace('PokemonService getAllHabilidades ' + url);
+    return this.http.get(url); //devuelve un objeto de tipo observable: hace una llamada, observa y en algún momento devuelve los datos
+  }//fin getAllPokemon
+
 } //fin PokemonService
