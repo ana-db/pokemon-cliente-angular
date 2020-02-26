@@ -85,3 +85,27 @@
     </div> <!-- fin class col-8 -->
 
 </div> <!-- fin class row -->    
+
+
+<!-- FILTRO POR CHECKBOX DE HABILIDADES 
+<div class="row">
+    <div class="col-6">
+        <H3>Filtro por checkbox de habilidades</H3>
+        <div class="p-2 border border-primary">
+            <div class="form-group">
+                <label for="options">Filtrar por habilidad:</label>
+                <button (click)="buscarHabilidad(optionsHabilidades)">Buscar</button>
+                <div *ngFor="let option of optionsHabilidades">
+                    <label>
+                        <input type="checkbox"
+                               name="options"
+                               value="{{option.value}}"
+                               [(ngModel)]="option.checked"/>
+                        {{option.name}}
+                    </label>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+-->

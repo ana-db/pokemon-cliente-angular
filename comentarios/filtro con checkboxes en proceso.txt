@@ -55,17 +55,17 @@ export class InicioComponent implements OnInit {
     console.trace('InicioComponent ngOnInit');
 
     /* 1) llamada al servicio REST de java:
-          usamos observables asÃ­ que nos tenemos que suscribir
-          cuando llamamos a un observable tenemos 3 posibles mÃ©todos y sÃ³lo 1 es obligatorio: 
+          usamos observables así que nos tenemos que suscribir
+          cuando llamamos a un observable tenemos 3 posibles métodos y sólo 1 es obligatorio: 
           1. cuando todo va bien, 2. cuando falla, 3. siempre
     */
     
     this.pokemonService.getAll().subscribe( 
       data => {
-          console.debug('PeticiÃ³n correcta data o%', data); 
+          console.debug('Petición correcta data o%', data); 
           this.pokemons = data; /* tenemos directamente todos los datos que necesitamos
-                                  no tenemos que hacer mÃ¡s llamadas para recoger otros datos porque data 
-                                  los tiene todos, con asignarlos al array de pokemos ya estÃ¡
+                                  no tenemos que hacer más llamadas para recoger otros datos porque data 
+                                  los tiene todos, con asignarlos al array de pokemos ya está
                                 */
           this.pokemonSeleccionado = this.pokemons[0];
           console.trace('pokemons ngOnInit %o', this.pokemons);
@@ -74,7 +74,7 @@ export class InicioComponent implements OnInit {
           this.pokemonsOriginal = this.pokemons.slice(); 
         },
       error => {
-          console.warn('PeticiÃ³n errÃ³nea data o%', error);
+          console.warn('Petición errónea data o%', error);
           this.mensaje = 'No existe el Pokemon';
       },
       () => {
@@ -112,7 +112,7 @@ export class InicioComponent implements OnInit {
 
    this.pokemonService.getAllHabilidades().subscribe( 
     data => {
-        console.debug('PeticiÃ³n correcta data o%', data); 
+        console.debug('Petición correcta data o%', data); 
         this.habilidadesPokemon = data; 
         console.trace('habilidadesPokemon ngOnInit %o', this.habilidadesPokemon);
         
@@ -120,9 +120,12 @@ export class InicioComponent implements OnInit {
         this.optionsHabilidades = this.habilidadesPokemon.map( el => {
           return  {name: el.nombre , value: el.id , checked: false};
         }); 
+        this.habilidadesNombre = this.optionsHabilidades.map( el => {
+          return  {name: el.nombre};
+        }); 
     },
     error => {
-        console.warn('PeticiÃ³n errÃ³nea data o%', error);
+        console.warn('Petición errónea data o%', error);
         this.mensaje = 'No existe la habilidad';
     }
   ); //fin llamada a getAllHabilidades con pokemonService  
@@ -132,28 +135,27 @@ export class InicioComponent implements OnInit {
   } //fin ngOnInit
 
 
-  //funciÃ³n para seleccionar una fruta y sacar su detalle: 
+  //función para seleccionar una fruta y sacar su detalle: 
   seleccionarPokemon = function(pokemon){
     console.log('Hemos hecho click en el pokemon %o', pokemon ); 
     this.pokemonSeleccionado = pokemon;
   }
 
-/*
+
   buscarHabilidad( optionsHabilidades) {
     console.debug('buscar %o', optionsHabilidades);
 
-    this.pokemons = this.pokemonsOriginal.slice();
+    this.habilidadesPokemon = this.habilidadesOriginal.slice();
     const habilidadesSeleccionadas = this.optionsHabilidades.filter( el => el.checked ).map( el => el.value);
     console.debug('habilidadesSeleccionadas %o', habilidadesSeleccionadas);
     
     if ( habilidadesSeleccionadas.length > 0 ) {  // si no hay nada checked apra que buscar
-      this.pokemons = this.pokemons.filter( el => {
+      this.habilidadesPokemon = this.habilidadesPokemon.filter( el => {
         console.debug('filtrando habilidades');
-        return el.habilidades.find( habilidad => habilidadesSeleccionadas.indexOf(habilidad) !== -1 );
+        return el.id.find( habilidad => habilidadesSeleccionadas.indexOf(habilidad) !== -1 );
       });
     
     }
   }//buscarbuscarHabilidad
-  */
 
 } //InicioComponent
