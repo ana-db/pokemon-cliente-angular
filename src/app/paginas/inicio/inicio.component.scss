@@ -1,8 +1,8 @@
 //Variables SASS:
-$color_green:#009C6B;
+$color:#009C6B;
 
 h1, h3{
-    color: $color_green;
+    color: $color;
 }
 
 .pokemon {
@@ -13,21 +13,29 @@ h1, h3{
     font-size: large;
     font-weight: bold;
     font-size: 1.5rem;
-    background-color: $color_green;
+    background-color: $color;
     color: white;
     padding-left: 0.5rem;
     padding-bottom: 0.25rem;
 }
 
 .detalle-pokemon{
-    border-color: $color_green;
+    border-color: $color;
     border-style: solid;
 }
 
 .active{
-    background-color: $color_green;
+    background-color: $color;
 }
 
 .col-6 {
     padding-left: 1.5rem;
+}
+
+.ficha-habilidades{
+    font-size: medium;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: $color;
+    padding-bottom: 0.25rem;
 }
