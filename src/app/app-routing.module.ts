@@ -10,7 +10,8 @@ const routes: Routes = [
   {path: '', component: InicioComponent},
   //vamos a porteger esta ruta con una guarda:
   {path: 'backoffice', component: BackofficeComponent, canActivate: [LoginGuard]},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: '**', component: InicioComponent} //se redirige a esta pagina si hay algún error y no encuentra la pagina
 ];
 
 

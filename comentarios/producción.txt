@@ -1,3 +1,30 @@
 http://www.thejavageek.com/2018/01/04/deploying-angular-app-tomcat/
 
-ng build --prod --base-href=/pokemon-angular-ana/
+Comando: ng build --prod --base-href=/pokemon-angular-ana/
+
+ng invokes angular
+build asks angular to build current app
+–base-href tells angular to create a reference directory where generated index.html file will be placed. So, in current case, generated files need to be placed in /angular folder in tomcat directory structure.
+
+When command runs successfully, it creates all required files in dist folder as below: 
+
+C:\0396\pokemon-cliente-angular>ng build --prod --base-href=/pokemon-angular-ana/
+Generating ES5 bundles for differential loading...
+ES5 bundle generation complete.
+
+chunk {2} polyfills-es2015.5b10b8fd823b6392f1fd.js (polyfills) 36.2 kB [initial] [rendered]
+chunk {3} polyfills-es5.3e8196928d184a6e5319.js (polyfills-es5) 126 kB [initial] [rendered]
+chunk {0} runtime-es2015.c5fa8325f89fc516600b.js (runtime) 1.45 kB [entry] [rendered]
+chunk {0} runtime-es5.c5fa8325f89fc516600b.js (runtime) 1.45 kB [entry] [rendered]
+chunk {1} main-es2015.d904f1c99884c4d43dea.js (main) 310 kB [initial] [rendered]
+chunk {1} main-es5.d904f1c99884c4d43dea.js (main) 378 kB [initial] [rendered]
+chunk {4} styles.c028f661f79f7de98b90.css (styles) 154 kB [initial] [rendered]
+Date: 2020-02-26T08:24:28.713Z - Hash: 042cfca23b4757dbf2a2 - Time: 45611ms
+
+además crea un index.html 
+(y otros 2 ficheros: favicon.ico y 3rdpartylicenses.txt)
+
+We are ready to deploy angular app in tomcat. Just copy all these files and paste them in /angular folder under /webapps folder in tomcat.
+
+Once copied, fire up the server and visit localhost:8080/pokemon-angular-ana/index.html and our bikes app should be seen running.
+http://192.168.0.50:8080/pokemon-angular-ana/
